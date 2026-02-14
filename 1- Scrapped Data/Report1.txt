@@ -1,0 +1,302 @@
+====================================================================================================
+DATABASE ANALYSIS REPORT - SCRAPED JOBS DATA
+====================================================================================================
+
+Database: D:\AWS\5 -Wrap\1- Scrapped Data\jobs.db
+Generated: 2026-01-08 18:14:51.462605
+
+
+====================================================================================================
+TABLE: job_urls
+====================================================================================================
+
+Total Records: 0
+
+No data available in this table.
+
+====================================================================================================
+TABLE: jobs
+====================================================================================================
+
+Total Records: 599
+
+SCHEMA INFORMATION:
+----------------------------------------------------------------------------------------------------
+Field Name                     Type            Not Null   Primary Key 
+----------------------------------------------------------------------------------------------------
+job_id                         TEXT            False      True        
+platform                       TEXT            True       False       
+actual_role                    TEXT            True       False       
+url                            TEXT            True       False       
+job_description                TEXT            False      False       
+skills                         TEXT            False      False       
+company_name                   TEXT            False      False       
+country                        TEXT            False      False       
+location                       TEXT            False      False       
+search_term                    TEXT            False      False       
+posted_date                    TEXT            False      False       
+scraped_at                     DATETIME        False      False       
+is_remote                      INTEGER         False      False       
+job_level                      TEXT            False      False       
+job_function                   TEXT            False      False       
+job_type                       TEXT            False      False       
+company_industry               TEXT            False      False       
+company_url                    TEXT            False      False       
+company_num_employees          TEXT            False      False       
+filter_tier1_keywords          TEXT            False      False       
+filter_tier2_keywords          TEXT            False      False       
+
+
+FIELD FREQUENCIES & COMPLETENESS:
+----------------------------------------------------------------------------------------------------
+Field Name                     Filled Records  Fill Rate    Unique Values  
+----------------------------------------------------------------------------------------------------
+job_id                                599      100.0%              599
+platform                              599      100.0%                2
+actual_role                           599      100.0%              410
+url                                   599      100.0%              599
+job_description                       599      100.0%              524
+skills                                597       99.7%              416
+company_name                          599      100.0%              329
+country                               599      100.0%               10
+location                              578       96.5%              282
+search_term                           599      100.0%                8
+posted_date                           577       96.3%               30
+scraped_at                            599      100.0%               10
+is_remote                             599      100.0%                2
+job_level                             599      100.0%               12
+job_function                          599      100.0%               43
+job_type                              472       78.8%                9
+company_industry                      281       46.9%               96
+company_url                           569       95.0%              536
+company_num_employees                 310       51.8%                9
+filter_tier1_keywords                 323       53.9%               28
+filter_tier2_keywords                 430       71.8%              114
+
+
+CATEGORICAL FIELD DISTRIBUTIONS:
+----------------------------------------------------------------------------------------------------
+
+platform:
+  indeed                                                  387 ( 64.6%)
+  linkedin                                                212 ( 35.4%)
+
+country:
+  USA                                                     188 ( 31.4%)
+  India                                                   106 ( 17.7%)
+  Germany                                                  71 ( 11.9%)
+  UK                                                       61 ( 10.2%)
+  Netherlands                                              40 (  6.7%)
+  Canada                                                   40 (  6.7%)
+  France                                                   35 (  5.8%)
+  Australia                                                22 (  3.7%)
+  Austria                                                  19 (  3.2%)
+  Denmark                                                  17 (  2.8%)
+
+search_term:
+  Supply Chain Optimization                               167 ( 27.9%)
+  Mathematical Optimization                               140 ( 23.4%)
+  Gurobi                                                   96 ( 16.0%)
+  Simulation Optimization                                  62 ( 10.4%)
+  Integer Programming                                      42 (  7.0%)
+  MILP                                                     36 (  6.0%)
+  Routing Optimization                                     35 (  5.8%)
+  operation research                                       21 (  3.5%)
+
+posted_date:
+  2026-01-06T00:00:00                                      96 ( 16.0%)
+  2026-01-05T00:00:00                                      46 (  7.7%)
+  2025-12-18T00:00:00                                      44 (  7.3%)
+  2026-01-07T00:00:00                                      34 (  5.7%)
+  2025-12-19T00:00:00                                      33 (  5.5%)
+  2025-12-11T00:00:00                                      28 (  4.7%)
+  2025-12-22T00:00:00                                      23 (  3.8%)
+  2025-12-15T00:00:00                                      23 (  3.8%)
+  2025-12-24T00:00:00                                      20 (  3.3%)
+  2025-12-09T00:00:00                                      20 (  3.3%)
+
+scraped_at:
+  2026-01-07 13:41:53                                     188 ( 31.4%)
+  2026-01-07 14:39:31                                     106 ( 17.7%)
+  2026-01-07 14:11:30                                      71 ( 11.9%)
+  2026-01-07 13:58:29                                      61 ( 10.2%)
+  2026-01-07 14:03:40                                      40 (  6.7%)
+  2026-01-07 13:49:41                                      40 (  6.7%)
+  2026-01-07 14:21:24                                      35 (  5.8%)
+  2026-01-07 14:26:21                                      22 (  3.7%)
+  2026-01-07 14:43:25                                      19 (  3.2%)
+  2026-01-07 14:15:26                                      17 (  2.8%)
+
+is_remote:
+  0                                                       477 ( 79.6%)
+  1                                                       122 ( 20.4%)
+
+job_level:
+  Mid-Senior level                                        312 ( 52.1%)
+  mid-senior level                                        104 ( 17.4%)
+  not applicable                                           41 (  6.8%)
+  Internship                                               35 (  5.8%)
+  entry level                                              24 (  4.0%)
+  associate                                                18 (  3.0%)
+  Entry level                                              18 (  3.0%)
+  Director                                                 17 (  2.8%)
+  internship                                               16 (  2.7%)
+  director                                                  7 (  1.2%)
+
+job_function:
+  Operations Research                                      97 ( 16.2%)
+  Engineering                                              77 ( 12.9%)
+  Supply Chain                                             71 ( 11.9%)
+  Data Science                                             70 ( 11.7%)
+  Information Technology                                   65 ( 10.9%)
+  Engineering and Information Technology                   55 (  9.2%)
+  Management and Manufacturing                             27 (  4.5%)
+  Analytics                                                27 (  4.5%)
+  Other                                                    19 (  3.2%)
+  Research, Analyst, and Information Technology            14 (  2.3%)
+
+job_type:
+  fulltime                                                426 ( 71.1%)
+  internship                                               17 (  2.8%)
+  parttime, fulltime                                        7 (  1.2%)
+  parttime                                                  6 (  1.0%)
+  fulltime, internship                                      5 (  0.8%)
+  contract                                                  5 (  0.8%)
+  temporary                                                 3 (  0.5%)
+  temporary, fulltime                                       2 (  0.3%)
+  parttime, fulltime, internship                            1 (  0.2%)
+
+company_num_employees:
+  10,000+                                                 192 ( 32.1%)
+  5,001 to 10,000                                          27 (  4.5%)
+  1,001 to 5,000                                           27 (  4.5%)
+  51 to 200                                                24 (  4.0%)
+  Decline to state                                         16 (  2.7%)
+  201 to 500                                                9 (  1.5%)
+  501 to 1,000                                              7 (  1.2%)
+  11 to 50                                                  5 (  0.8%)
+  2 to 10                                                   3 (  0.5%)
+
+filter_tier1_keywords:
+  supply chain                                             80 ( 13.4%)
+  data scientist                                           56 (  9.3%)
+  optim                                                    50 (  8.3%)
+  machine learning                                         25 (  4.2%)
+  analytics                                                21 (  3.5%)
+  logistics                                                16 (  2.7%)
+  operations research                                      13 (  2.2%)
+  optim, algorithm                                         12 (  2.0%)
+  optim, data scientist                                     7 (  1.2%)
+  algorithm                                                 7 (  1.2%)
+
+
+SAMPLE VALUES FOR KEY FIELDS:
+----------------------------------------------------------------------------------------------------
+
+job_id:
+  1. indeed_Australia_in-00fe36dbbe3ecada_93911
+  2. indeed_Australia_in-07e2b09617c6be6f_29809
+  3. indeed_Australia_in-1707d97e6f05de3e_76123
+
+platform:
+  1. indeed
+  2. linkedin
+
+actual_role:
+  1. Enterprise Operations Business Internship
+  2. Enterprise Operations Engineering Internship
+  3. Reporting and Analytics Senior Analyst
+
+url:
+  1. https://at.indeed.com/viewjob?jk=2307028e80308f56
+  2. https://at.indeed.com/viewjob?jk=2e30ad0cedbe69b9
+  3. https://at.indeed.com/viewjob?jk=319214087e3e900a
+
+job_description:
+  1. The following posting is a pipeline requisition, m
+  2. The following posting is a pipeline requisition, m
+  3. The Ohio Colleges of Medicine Government Resource 
+
+skills:
+  1. Business Acumen, Communication, Creativity, Custom
+  2. Business Acumen, Communication, Customer Service, 
+  3. Dashboards, Data Analysis, Data Governance, Data Q
+
+company_name:
+  1. HP
+  2. The Ohio State University Wexner Medical Center
+  3. SAIC
+
+country:
+  1. USA
+  2. Canada
+  3. UK
+
+location:
+  1. Spring, TX, US
+  2. Columbus, OH, US
+  3. Huntsville, AL, US
+
+search_term:
+  1. operation research
+  2. Mathematical Optimization
+  3. MILP
+
+posted_date:
+  1. 2026-01-06T00:00:00
+  2. 2026-01-07T00:00:00
+  3. 2025-12-22T00:00:00
+
+scraped_at:
+  1. 2026-01-07 13:41:53
+  2. 2026-01-07 13:49:41
+  3. 2026-01-07 13:58:29
+
+is_remote:
+  1. 0
+  2. 1
+
+job_level:
+  1. Internship
+  2. Mid-Senior level
+  3. Director
+
+job_function:
+  1. Information Technology
+  2. Analytics
+  3. Engineering
+
+job_type:
+  1. fulltime, internship
+  2. fulltime
+  3. parttime
+
+company_industry:
+  1. Industrial Manufacturing
+  2. Telecommunications
+  3. Internet And Software
+
+company_url:
+  1. http://www.respondhr.com/150525030
+  2. http://www.respondhr.com/150525033
+  3. https://osu.wd1.myworkdayjobs.com/OSUCareers/job/C
+
+company_num_employees:
+  1. 10,000+
+  2. 1,001 to 5,000
+  3. 51 to 200
+
+filter_tier1_keywords:
+  1. analytics
+  2. machine learning
+  3. optim
+
+filter_tier2_keywords:
+  1. supply chain optimization, demand planning
+  2. supply chain optimization, Industrial Engineering,
+  3. operations research
+
+
+====================================================================================================
+END OF REPORT
+====================================================================================================

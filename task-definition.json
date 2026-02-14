@@ -1,0 +1,39 @@
+{
+  "family": "joblab-pipeline-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::780822965578:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::780822965578:role/ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "joblab-pipeline",
+      "image": "780822965578.dkr.ecr.us-east-1.amazonaws.com/joblab-pipeline:latest",
+      "command": ["sh", "-c", "exec python -u src/orchestrate/run_weekly.py 2>&1"],
+      "essential": true,
+      "environment": [
+        { "name": "S3_BUCKET", "value": "joblab-pipeline-data-moha-20260126" },
+        { "name": "S3_PREFIX", "value": "joblab" },
+        { "name": "AWS_REGION", "value": "us-east-1" },
+        { "name": "DRY_RUN", "value": "false" },
+        { "name": "PYTHONUNBUFFERED", "value": "1" }
+      ],
+      "secrets": [
+        {
+          "name": "CONVEX_DEPLOYMENT_URL",
+          "valueFrom": "arn:aws:ssm:us-east-1:780822965578:parameter/joblab/CONVEX_DEPLOYMENT_URL"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/joblab-pipeline",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs",
+          "awslogs-create-group": "true"
+        }
+      }
+    }
+  ]
+}

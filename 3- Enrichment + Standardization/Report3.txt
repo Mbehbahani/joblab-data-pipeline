@@ -1,0 +1,158 @@
+====================================================================================================
+ENRICHMENT & STANDARDIZATION REPORT
+====================================================================================================
+
+Generated: 2026-02-01 12:06:54.134038
+Total Records: 33
+
+PIPELINE TASKS:
+  1. job_type_filled       - Fill missing job types
+  2. edu_level_filled      - Fill NA education levels
+  3. job_level_std         - Standardize job levels (12 → 7 categories)
+  4. job_function_std      - Standardize job functions (43 → 14 categories)
+  5. company_industry_std  - Standardize industries (96 → 15 categories)
+  6. skills                - Update with category-level skill extraction (30 categories)
+  7. job_relevance_score   - Score job relevance based on filter keywords
+
+====================================================================================================
+NEW FIELDS SUMMARY
+====================================================================================================
+
+Field Name                     Fill Rate    Unique Values  
+----------------------------------------------------------------------------------------------------
+job_type_filled                 100.0%               4
+edu_level_filled                 72.7%               7
+job_level_std                   100.0%               7
+job_function_std                100.0%               9
+company_industry_std             97.0%              12
+skills                           97.0%              31
+job_relevance_score             100.0%               9
+
+
+====================================================================================================
+FIELD DISTRIBUTIONS
+====================================================================================================
+
+1. job_type_filled
+   Method: Pattern matching on existing value + description
+   Full-time           :    29 (87.9%)
+   Contract            :     2 (6.1%)
+   Part-time           :     1 (3.0%)
+   Internship          :     1 (3.0%)
+
+2. edu_level_filled
+   Method: Keep existing + pattern extraction from description
+   Bachelor                                :    10 (30.3%)
+   NA                                      :     9 (27.3%)
+   Master, Bachelor                        :     4 (12.1%)
+   PhD, Master                             :     3 (9.1%)
+   PhD, Master, Bachelor                   :     3 (9.1%)
+   Master                                  :     3 (9.1%)
+   PhD                                     :     1 (3.0%)
+
+3. job_level_std
+   Method: Manual mapping (12 → 7 categories)
+   Senior              :    13 (39.4%)
+   Mid-Level           :     8 (24.2%)
+   Entry Level         :     4 (12.1%)
+   Not Specified       :     3 (9.1%)
+   Director            :     3 (9.1%)
+   Internship          :     1 (3.0%)
+   Executive           :     1 (3.0%)
+
+4. job_function_std
+   Method: Keyword matching (43 → 14 categories)
+   Supply Chain & Logistics      :    14 (42.4%)
+   Engineering                   :     7 (21.2%)
+   Information Technology        :     4 (12.1%)
+   Data Science & Analytics      :     3 (9.1%)
+   Operations Research           :     1 (3.0%)
+   Education                     :     1 (3.0%)
+   Business & Finance            :     1 (3.0%)
+   Management                    :     1 (3.0%)
+   Sales & Marketing             :     1 (3.0%)
+
+5. company_industry_std
+   Method: Keyword matching on industry + company_name + description
+   Manufacturing & Industrial         :     6 (18.2%)
+   Food & Beverage                    :     5 (15.2%)
+   Technology & Software              :     5 (15.2%)
+   Transportation & Logistics         :     4 (12.1%)
+   Consulting & Professional Services :     2 (6.1%)
+   Healthcare & Pharmaceuticals       :     2 (6.1%)
+   Education & Research               :     2 (6.1%)
+   Finance & Banking                  :     2 (6.1%)
+   Energy & Utilities                 :     2 (6.1%)
+   Government & Public Sector         :     1 (3.0%)
+   Retail & E-commerce                :     1 (3.0%)
+   Other                              :     1 (3.0%)
+
+6. skills (updated)
+   Method: Category-level extraction using skills_reference.json (30 categories)
+   Jobs with skill categories: 32 (97.0%)
+   Unique categories found: 29
+   Total category mentions: 174
+   Avg categories per job: 5.3
+
+   All Categories (sorted by frequency):
+   Soft & Managerial Skills                :    24 (72.7%)
+   Visualization & BI                      :    13 (39.4%)
+   Python                                  :    13 (39.4%)
+   Data Science & Analytics                :    11 (33.3%)
+   Machine Learning                        :    11 (33.3%)
+   Mathematical Modeling                   :    11 (33.3%)
+   Statistics & Probability                :    11 (33.3%)
+   Cloud & DevOps                          :     9 (27.3%)
+   Programming Languages                   :     8 (24.2%)
+   Security & Compliance                   :     8 (24.2%)
+   Gurobi                                  :     7 (21.2%)
+   Optimization & Operations Research      :     6 (18.2%)
+   Product & Business Knowledge            :     6 (18.2%)
+   Research & Scientific Computing         :     6 (18.2%)
+   Software Engineering Practices          :     5 (15.2%)
+   AI & Advanced Modeling                  :     3 (9.1%)
+   Backend Development                     :     3 (9.1%)
+   Data Engineering                        :     3 (9.1%)
+   CPLEX                                   :     2 (6.1%)
+   R                                       :     2 (6.1%)
+   Generative AI                           :     2 (6.1%)
+   Big Data & Distributed Systems          :     2 (6.1%)
+   APIs & Integration                      :     2 (6.1%)
+   Frontend Development                    :     1 (3.0%)
+   Natural Language Processing             :     1 (3.0%)
+   AMPL                                    :     1 (3.0%)
+   GAMS                                    :     1 (3.0%)
+   Pyomo                                   :     1 (3.0%)
+   Databases & Data Storage                :     1 (3.0%)
+
+7. job_relevance_score
+   Method: Scoring based on filter_tier1_keywords and filter_tier2_keywords
+   Rules: 5=Both tiers, 4=Tier1 'optim'/multiple, 3=Tier2 multiple, 2=Tier1, 1=Tier2, 0=None
+   Score 10:     2 (6.1%)
+   Score 9:     3 (9.1%)
+   Score 8:     5 (15.2%)
+   Score 7:     2 (6.1%)
+   Score 6:     3 (9.1%)
+   Score 5:     4 (12.1%)
+   Score 4:     9 (27.3%)
+   Score 3:     4 (12.1%)
+   Score 2:     1 (3.0%)
+   Average: 5.73, Median: 5
+
+
+====================================================================================================
+BEFORE vs AFTER COMPARISON
+====================================================================================================
+
+Original Field            Unique     New Field                 Unique    
+----------------------------------------------------------------------------------------------------
+job_type                  4          job_type_filled           4         
+education_level           7          edu_level_filled          7         
+job_level                 8          job_level_std             7         
+job_function              12         job_function_std          9         
+company_industry          27         company_industry_std      12        
+skills (original)         0          skills (updated)          0         
+
+====================================================================================================
+END OF REPORT
+====================================================================================================

@@ -1,0 +1,129 @@
+====================================================================================================
+PREPROCESSING REPORT - FIELDS CREATED AND TRANSFORMATIONS
+====================================================================================================
+
+Generated: 2026-01-08 18:45:43.831004
+Original Records: 599
+Processed Records: 599
+
+PIPELINE STEPS:
+  STEP 0: URL-Based Duplicate Detection
+  STEP 1: Text Normalization (HTML decode, tag removal, markdown cleanup, boilerplate removal)
+  STEP 2: Language Detection (langdetect library)
+  STEP 3: NLP Feature Extraction (Education Level, Field, Research Position)
+
+
+====================================================================================================
+NEW FIELDS SUMMARY
+====================================================================================================
+
+Field Name                     Type            Fill Rate    Unique Values  
+----------------------------------------------------------------------------------------------------
+has_url_duplicate              INTEGER          100.0%               2
+job_description_clean          TEXT             100.0%             523
+detected_language              TEXT             100.0%               5
+education_level                TEXT              75.6%              13
+education_field                TEXT             100.0%              61
+is_research                    INTEGER          100.0%               2
+
+
+====================================================================================================
+FIELD DISTRIBUTIONS
+====================================================================================================
+
+1. has_url_duplicate
+   Origin: URL comparison | Step 0: Duplicate Detection
+   0 (Not Duplicate  ):    549 ( 91.7%)
+   1 (Has Duplicate  ):     50 (  8.3%)
+
+2. job_description_clean
+   Origin: job_description | Step 1: Text Normalization
+   Process: HTML decode → Remove tags → Clean markdown → Normalize whitespace → Remove boilerplate → Lowercase
+   Filled: 599 (100.0%) | ~20-30% text reduction
+
+3. detected_language
+   Origin: job_description_clean | Step 2: Language Detection (langdetect)
+   en     (English             ):    563 ( 94.0%)
+   de     (German              ):     18 (  3.0%)
+   fr     (French              ):     11 (  1.8%)
+   nl     (Dutch               ):      6 (  1.0%)
+   da     (Danish              ):      1 (  0.2%)
+
+4. education_level
+   Origin: job_description | Step 3: NLP Extraction
+   Patterns: PhD (ph.d., doctoral), Master (master's, m.s., mba), Bachelor (bachelor's, b.s., 4-year degree)
+             Associate (associate's, 2-year), High School (high school, ged)
+   Returns: ALL matching levels as SET (comma-separated)
+   Distribution (Top 15):
+   NA                                           :    146 ( 24.4%)
+   Bachelor                                     :    115 ( 19.2%)
+   Master, Bachelor                             :    114 ( 19.0%)
+   Master                                       :     83 ( 13.9%)
+   PhD, Master                                  :     68 ( 11.4%)
+   PhD, Master, Bachelor                        :     45 (  7.5%)
+   PhD                                          :     17 (  2.8%)
+   Master, Bachelor, High School                :      3 (  0.5%)
+   PhD, Master, Bachelor, High School           :      2 (  0.3%)
+   PhD, Bachelor                                :      2 (  0.3%)
+   PhD, Master, Bachelor, Associate, High School:      1 (  0.2%)
+   Master, High School                          :      1 (  0.2%)
+   High School                                  :      1 (  0.2%)
+   Bachelor, High School                        :      1 (  0.2%)
+
+5. education_field
+   Origin: job_description | Step 3: NLP Extraction
+   Categories (checked in order):
+     1. Industrial Engineering (operations research, manufacturing, supply chain, process, quality, systems eng.)
+     2. Other Engineering (mechanical, electrical, civil, chemical, software, computer, aerospace, etc.)
+     3. Computer Science (CS, data science, machine learning, AI)
+     4. Business (business admin, mba, finance, accounting)
+     5. Mathematics and Statistics (mathematics, statistics, quantitative methods)
+     6. Science, Medicine, Healthcare/Nursing
+   Default: 'Other Fields' if no match
+   Distribution (Top 20):
+   Other Fields                                                :    69 ( 11.5%)
+   Computer Science                                            :    64 ( 10.7%)
+   Business                                                    :    40 (  6.7%)
+   Industrial Engineering, Computer Science, Mathematics and Statistics:    35 (  5.8%)
+   Computer Science, Science                                   :    33 (  5.5%)
+   Industrial Engineering, Computer Science, Business, Mathematics and Statistics:    32 (  5.3%)
+   Industrial Engineering                                      :    32 (  5.3%)
+   Other Engineering, Computer Science                         :    31 (  5.2%)
+   Industrial Engineering, Computer Science                    :    25 (  4.2%)
+   Computer Science, Mathematics and Statistics, Science       :    23 (  3.8%)
+   Industrial Engineering, Business                            :    17 (  2.8%)
+   Computer Science, Mathematics and Statistics                :    16 (  2.7%)
+   Computer Science, Business                                  :    16 (  2.7%)
+   Computer Science, Business, Mathematics and Statistics      :    15 (  2.5%)
+   Other Engineering, Computer Science, Mathematics and Statistics, Science:    14 (  2.3%)
+   Industrial Engineering, Computer Science, Business          :    11 (  1.8%)
+   Industrial Engineering, Other Engineering, Computer Science, Mathematics and Statistics:     9 (  1.5%)
+   Industrial Engineering, Other Engineering, Computer Science, Mathematics and Statistics, Science:     8 (  1.3%)
+   Industrial Engineering, Other Engineering                   :     8 (  1.3%)
+   Other Engineering, Computer Science, Business, Mathematics and Statistics:     7 (  1.2%)
+
+6. is_research
+   Origin: job_description + company_name | Step 3: NLP Extraction
+   Patterns: Academic (professor, lecturer, faculty, tenure-track)
+             Research (research fellow/scientist, postdoc, principal investigator, lab director)
+             Student (phd student/candidate, doctoral candidate)
+             Organizations (university, college, institute, research center, laboratory, academy)
+   0 (Industry/Corporate  ):    553 ( 92.3%)
+   1 (Research/Academic   ):     46 (  7.7%)
+
+
+====================================================================================================
+SUMMARY
+====================================================================================================
+
+Fields Added: 6
+  - has_url_duplicate (8.3% duplicates)
+  - job_description_clean (100% filled, optimized for embeddings)
+  - detected_language (94.0% English, 3.0% German, 1.8% French)
+  - education_level (75.6% filled, SET format)
+  - education_field (100% filled, 61 unique combinations)
+  - is_research (7.7% research/academic positions)
+
+====================================================================================================
+END OF REPORT
+====================================================================================================

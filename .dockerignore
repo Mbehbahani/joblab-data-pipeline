@@ -1,0 +1,67 @@
+# Dependencies (will be installed in container)
+node_modules/
+.venv/
+venv/
+
+# Node.js files (not needed - pure Python)
+package.json
+package-lock.json
+*.ts
+convex/
+4- convex/
+
+# Database files (generated at runtime)
+*.db
+*.db-journal
+
+# Backups
+backups/
+
+# Environment files (use docker env vars instead)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# Documentation (not needed in container)
+*.md
+!README.md
+
+# Reports (generated at runtime)
+Report*.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Test files
+tests/
+test_*.py
+*_test.py
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+zDocs/
+
+# AWS credentials (never include!)
+*.pem
+credentials
+
+scripts/
