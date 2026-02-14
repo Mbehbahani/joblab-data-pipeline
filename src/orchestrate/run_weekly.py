@@ -447,6 +447,43 @@ class PipelineOrchestrator:
             logger.error(f"Deduplication failed: {e}")
             self.stats["errors"].append(f"Deduplication: {str(e)}")
             return False
+
+    def step7_embed_new_jobs(self, dry_run: bool = False) -> bool:
+        """Embed new job descriptions into job_chunks for semantic search."""
+        logger.info(f"{'='*60}")
+        logger.info("STEP: Embed New Jobs (Semantic Search)")
+        logger.info(f"{'='*60}")
+
+        if dry_run:
+            logger.info("DRY RUN: Skipping embedding step")
+            return True
+
+        if not self.config["supabase_url"]:
+            logger.warning("Supabase URL not set, skipping embedding step")
+            return True
+
+        try:
+            # Import backfill module from same directory
+            from orchestrate.backfill_embeddings import (
+                backfill,
+            )
+
+            # Ensure env vars are set for the backfill module
+            os.environ["SUPABASE_URL"] = self.config["supabase_url"]
+            os.environ["SUPABASE_SERVICE_ROLE_KEY"] = self.config["supabase_service_role_key"] or ""
+
+            logger.info("Embedding new job descriptions...")
+            backfill(batch_size=50, dry_run=False)
+
+            logger.info("Embedding step completed successfully")
+            return True
+
+        except Exception as e:
+            logger.error(f"Embedding step failed: {e}")
+            self.stats["errors"].append(f"Embedding: {str(e)}")
+            # Non-fatal: don't fail the whole pipeline for embedding issues
+            logger.warning("Embedding failure is non-fatal — pipeline continues")
+            return True
     
     def print_summary(self):
         """Print run summary"""
@@ -590,6 +627,9 @@ def main():
             logger.error("Pipeline failed at deduplication step")
             orchestrator.print_summary()
             sys.exit(1)
+
+        # Step 7 — Embed new job descriptions for semantic search
+        orchestrator.step7_embed_new_jobs(dry_run=args.dry_run)
         
         # Print summary
         success = orchestrator.print_summary()
