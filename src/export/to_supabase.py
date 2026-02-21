@@ -416,6 +416,7 @@ class PushResult:
     details_skipped: int = 0
     total_in_db: int = 0
     new_jobs_count: int = 0
+    pushed_job_ids: List[str] = field(default_factory=list)  # job_ids that were upserted
     errors: List[str] = field(default_factory=list)
     
     @property
@@ -523,6 +524,11 @@ def push_jobs_to_supabase(
             batch_result = client.upsert_jobs(supabase_batch)
             upserted = int(batch_result.get("upserted", 0))
             result.jobs_inserted += upserted
+            
+            # Track pushed job_ids for downstream embedding step
+            for job in batch:
+                if "job_id" in job:
+                    result.pushed_job_ids.append(job["job_id"])
             
             logger.info(
                 f"   ✓ Batch {batch_num}/{total_batches}: "

@@ -376,11 +376,9 @@ COUNTRIES = {
     "UK": {"name": "United Kingdom", "indeed_country": "UK", "flag": "🇬🇧"},
     "Netherlands": {"name": "Netherlands", "indeed_country": "Netherlands", "flag": "🇳🇱"},
     "Germany": {"name": "Germany", "indeed_country": "Germany", "flag": "🇩🇪"},
-    "Denmark": {"name": "Denmark", "indeed_country": "Denmark", "flag": "🇩🇰"},
     "France": {"name": "France", "indeed_country": "France", "flag": "🇫🇷"},
     "Australia": {"name": "Australia", "indeed_country": "Australia", "flag": "🇦🇺"},
     "India": {"name": "India", "indeed_country": "India", "flag": "🇮🇳"},
-    "Austria": {"name": "Austria", "indeed_country": "Austria", "flag": "🇦🇹"},
 }
 
 SEARCH_TERMS = [
@@ -404,9 +402,7 @@ COUNTRY_JOB_TARGETS = {
     "Germany": 100,    # Medium-large market
     "Australia": 100,  # Medium market
     "France": 80,      # Medium market
-    "Netherlands": 50, # Small market - but high OR concentration
-    "Denmark": 50,     # Small market
-    "Austria": 50,     # Small market
+    "Netherlands": 100, # Small market - but high OR concentration
 }
 
 # Multiplier for all country targets (change this to scale all targets)
@@ -422,14 +418,15 @@ PLATFORMS = ["indeed", "linkedin"]
 DEFAULT_COUNTRIES_INDEED = list(COUNTRIES.keys())  # All 10 countries
 
 # LinkedIn: Limited to avoid rate limiting (high-value markets only)
-DEFAULT_COUNTRIES_LINKEDIN = ["USA", "Germany", "Netherlands"]
+DEFAULT_COUNTRIES_LINKEDIN = ["Germany", "Netherlands"]
 
 # ============================================================
-# UNIFIED TIME FILTER - Used by both Indeed and LinkedIn
+# TIME FILTERS - Platform-specific (Indeed vs LinkedIn)
 # ============================================================
 # Note: Indeed's hours_old filter is approximate - jobs may be slightly older
 # We apply a post-scrape filter to ensure strict compliance
-HOURS_OLD = 60  # ~2 days of job postings
+HOURS_OLD_INDEED = 30   # ~1.25 days for Indeed (post-scrape filter enforced)
+HOURS_OLD_LINKEDIN = 50  # ~2 days for LinkedIn
 
 # LinkedIn rate-limiting settings (improved from job2LN.ipynb approach)
 LINKEDIN_SLEEP_SEC = 10.0  # Sleep between LinkedIn queries (slightly longer for stability)
@@ -448,7 +445,7 @@ def scrape_linkedin_for_country(
     queries: list[str],
     location: str,
     results_per_query: int = 25,
-    hours_old: int = HOURS_OLD,  # Uses HOURS_OLD constant (defaults to 50 hours)
+    hours_old: int = HOURS_OLD_LINKEDIN,  # Uses HOURS_OLD_LINKEDIN constant
     sleep_sec: float = 10.0,
     max_errors: int = 3,
     fetch_description: bool = True,
@@ -877,7 +874,7 @@ async def scrape_optimization_jobs(
                         search_term=search_term,
                         location=country["name"],
                         results_wanted=jobs_per_term,
-                        hours_old=HOURS_OLD,  # Unified time filter
+                        hours_old=HOURS_OLD_INDEED,  # Indeed-specific time filter
                         country_indeed=country["indeed_country"],
                     )
 
@@ -931,7 +928,7 @@ async def scrape_optimization_jobs(
                     new_jobs = process_jobs_dataframe(
                         jobs_df, "indeed", country_key, search_term,
                         seen_urls,
-                        hours_old_filter=HOURS_OLD,  # Filter out jobs older than HOURS_OLD
+                        hours_old_filter=HOURS_OLD_INDEED,  # Filter out jobs older than HOURS_OLD_INDEED
                     )
                     country_jobs.extend(new_jobs)
                     country_stats[country_key]["indeed"] += len(new_jobs)
@@ -955,7 +952,7 @@ async def scrape_optimization_jobs(
                 queries=SEARCH_TERMS,
                 location=country["name"],
                 results_per_query=jobs_per_term,
-                hours_old=HOURS_OLD,  # Unified time filter
+                hours_old=HOURS_OLD_LINKEDIN,  # LinkedIn-specific time filter
                 sleep_sec=LINKEDIN_SLEEP_SEC,
                 max_errors=LINKEDIN_MAX_ERRORS,
                 fetch_description=LINKEDIN_FETCH_DESCRIPTION,
@@ -1008,7 +1005,7 @@ async def scrape_optimization_jobs(
                     new_jobs = process_jobs_dataframe(
                         linkedin_df, "linkedin", country_key, None,  # search_term from df
                         seen_urls,
-                        hours_old_filter=HOURS_OLD,  # Apply same date filter for consistency
+                        hours_old_filter=HOURS_OLD_LINKEDIN,  # LinkedIn-specific date filter
                     )
                     country_jobs.extend(new_jobs)
                     country_stats[country_key]["linkedin"] += len(new_jobs)
@@ -1031,7 +1028,7 @@ async def scrape_optimization_jobs(
         # Add delay between countries to avoid overwhelming LinkedIn
         # Important when scraping multiple countries in sequence
         if country_key != target_countries[-1]:  # Skip delay after last country
-            delay = 30  # 30 second delay between countries
+            delay = 5  # 5 second delay between countries
             print(f"\n  [COOLDOWN] Waiting {delay}s before next country to avoid rate limiting...")
             time.sleep(delay)
 
@@ -1094,7 +1091,7 @@ Examples:
         "--countries",
         type=str,
         default=None,
-        help="Comma-separated list of countries (default: all 10 countries). Options: USA,Canada,UK,Netherlands,Germany,Denmark,France,Austria,Australia,India",
+        help="Comma-separated list of countries (default: all 10 countries). Options: USA,Canada,UK,Netherlands,Germany,France,Australia,India",
     )
     
     parser.add_argument(

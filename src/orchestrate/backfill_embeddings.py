@@ -2,15 +2,24 @@
 """
 Backfill Embeddings Script
 ===========================
-One-time script to embed all existing job_details rows into the
-job_chunks table using Bedrock Titan Text Embeddings V2 (512 dims).
+Embeds job descriptions into the job_chunks table using
+Bedrock Titan Text Embeddings V2 (512 dims).
+
+Modes:
+- **Pipeline mode** (called by run_weekly.py with job_ids):
+  Only embeds the specific job_ids that were just pushed to Supabase.
+  Fast — skips the expensive "fetch ALL job_details" step.
+
+- **Standalone / backfill mode** (no job_ids):
+  Fetches all job_details rows from Supabase, skips any job_id
+  already in job_chunks, and embeds the remainders.
 
 Logic:
-1. Fetch all job_details rows from Supabase.
+1. Receive job_ids list (pipeline) or fetch all from Supabase (standalone).
 2. Skip any job_id that already exists in job_chunks.
 3. Chunk each job_description (~500-800 tokens approx).
 4. Call Bedrock Titan embeddings for each chunk.
-5. Insert into job_chunks table.
+5. Insert into job_chunks table (with retry on transient errors).
 6. Log progress throughout.
 
 Environment Variables:
@@ -185,7 +194,7 @@ def chunk_text(text: str) -> list[str]:
 
 
 def fetch_all_job_details() -> list[dict[str, Any]]:
-    """Fetch all job_details rows (paginated)."""
+    """Fetch all job_details rows (paginated). Used in standalone/backfill mode."""
     all_rows: list[dict[str, Any]] = []
     page_size = 1000
     offset = 0
@@ -206,6 +215,33 @@ def fetch_all_job_details() -> list[dict[str, Any]]:
         if len(page) < page_size:
             break
         offset += page_size
+
+    return all_rows
+
+
+def fetch_job_details_by_ids(job_ids: list[str]) -> list[dict[str, Any]]:
+    """
+    Fetch job_details rows for a specific set of job_ids.
+    Used in pipeline mode to avoid fetching ALL rows.
+    Fetches in batches of 50 to avoid URL length limits.
+    """
+    all_rows: list[dict[str, Any]] = []
+    batch_size = 50  # PostgREST URL length safety
+
+    for i in range(0, len(job_ids), batch_size):
+        batch_ids = job_ids[i : i + batch_size]
+        # PostgREST 'in' filter: job_id=in.("id1","id2",...)
+        quoted = ",".join(f'"{jid}"' for jid in batch_ids)
+        url = f"{_base_url()}/job_details"
+        params = {
+            "select": "job_id,job_description",
+            "job_id": f"in.({quoted})",
+        }
+        resp = requests.get(url, headers=_headers(), params=params, timeout=30)
+        resp.raise_for_status()
+        page = resp.json()
+        if page:
+            all_rows.extend(page)
 
     return all_rows
 
@@ -238,7 +274,7 @@ def fetch_existing_chunk_job_ids() -> set[str]:
 
 
 def insert_chunk(job_id: str, chunk_text: str, embedding: list[float], chunk_index: int) -> bool:
-    """Insert a single chunk into job_chunks."""
+    """Insert a single chunk into job_chunks with retry on transient errors."""
     url = f"{_base_url()}/job_chunks"
     payload = {
         "job_id": job_id,
@@ -246,21 +282,51 @@ def insert_chunk(job_id: str, chunk_text: str, embedding: list[float], chunk_ind
         "chunk_index": chunk_index,
         "embedding": embedding,
     }
-    resp = requests.post(url, headers=_headers(), json=payload, timeout=30)
-    if resp.status_code in (200, 201):
-        return True
-    logger.error(
-        "Failed to insert chunk for job_id=%s chunk=%d: %s %s",
-        job_id, chunk_index, resp.status_code, resp.text,
-    )
+
+    for attempt in range(MAX_RETRIES):
+        resp = requests.post(url, headers=_headers(), json=payload, timeout=30)
+        if resp.status_code in (200, 201):
+            return True
+
+        # Retry on transient server errors (502, 503, 500, 429)
+        if resp.status_code in (429, 500, 502, 503, 504) and attempt < MAX_RETRIES - 1:
+            wait = BASE_BACKOFF * (2 ** attempt)
+            logger.warning(
+                "Transient %d inserting chunk job_id=%s chunk=%d (attempt %d/%d), retrying in %.1fs...",
+                resp.status_code, job_id, chunk_index, attempt + 1, MAX_RETRIES, wait,
+            )
+            time.sleep(wait)
+            continue
+
+        # Non-retryable error or last attempt
+        # Truncate HTML error bodies to avoid log spam
+        error_text = resp.text
+        if len(error_text) > 200:
+            error_text = error_text[:200] + "... [truncated]"
+        logger.error(
+            "Failed to insert chunk for job_id=%s chunk=%d: %s %s",
+            job_id, chunk_index, resp.status_code, error_text,
+        )
+        return False
+
     return False
 
 
 # ── Main Backfill Logic ────────────────────────────────────────────────────
 
 
-def backfill(batch_size: int = DEFAULT_BATCH_SIZE, dry_run: bool = False):
-    """Run the full backfill process."""
+def backfill(batch_size: int = DEFAULT_BATCH_SIZE, dry_run: bool = False, job_ids: list[str] | None = None):
+    """
+    Run the embedding process.
+
+    Args:
+        batch_size: Number of jobs to process per batch.
+        dry_run: If True, skip actual embedding and insertion.
+        job_ids: Optional list of specific job_ids to embed.
+                 If provided (pipeline mode), only these jobs are fetched
+                 from job_details and embedded — much faster than scanning all.
+                 If None (standalone/backfill mode), fetches ALL job_details.
+    """
     overall_start = time.time()
 
     logger.info("=" * 70)
@@ -271,6 +337,10 @@ def backfill(batch_size: int = DEFAULT_BATCH_SIZE, dry_run: bool = False):
     logger.info("Region:     %s", AWS_REGION)
     logger.info("Batch size: %d", batch_size)
     logger.info("Dry run:    %s", dry_run)
+    if job_ids is not None:
+        logger.info("Mode:       Pipeline (embedding %d specific job_ids)", len(job_ids))
+    else:
+        logger.info("Mode:       Standalone (scan all job_details)")
     logger.info("=" * 70)
 
     # Validate config
@@ -278,10 +348,17 @@ def backfill(batch_size: int = DEFAULT_BATCH_SIZE, dry_run: bool = False):
         logger.error("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set")
         sys.exit(1)
 
-    # Step 1 — Fetch job_details
-    logger.info("Fetching job_details from Supabase...")
-    job_details = fetch_all_job_details()
-    logger.info("Found %d job_details rows", len(job_details))
+    # Step 1 — Fetch job_details (mode-dependent)
+    if job_ids is not None and len(job_ids) > 0:
+        # Pipeline mode: fetch only the specific job_ids we just pushed
+        logger.info("Fetching %d specific job_details from Supabase...", len(job_ids))
+        job_details = fetch_job_details_by_ids(job_ids)
+        logger.info("Found %d job_details rows (of %d requested)", len(job_details), len(job_ids))
+    else:
+        # Standalone/backfill mode: fetch everything
+        logger.info("Fetching job_details from Supabase...")
+        job_details = fetch_all_job_details()
+        logger.info("Found %d job_details rows", len(job_details))
 
     if not job_details:
         logger.info("No job_details to process. Exiting.")

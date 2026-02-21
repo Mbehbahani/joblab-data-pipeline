@@ -116,6 +116,7 @@ class PipelineOrchestrator:
             "supabase_skipped": 0,
             "duplicates_removed": 0,
             "details_removed": 0,
+            "chunks_removed": 0,
             "errors": [],
         }
         
@@ -391,6 +392,9 @@ class PipelineOrchestrator:
             self.stats["supabase_upserted"] = result.jobs_inserted
             self.stats["supabase_skipped"] = result.jobs_skipped
             
+            # Store pushed job_ids for downstream embedding step
+            self._pushed_job_ids = result.pushed_job_ids
+            
             if not result.success:
                 for error in result.errors:
                     logger.error(f"Supabase push error: {error}")
@@ -438,8 +442,16 @@ class PipelineOrchestrator:
             details_removed = deduplicate("job_details")
             self.stats["details_removed"] = details_removed
             
-            total_removed = jobs_removed + details_removed
-            logger.info(f"Deduplication completed: {jobs_removed} jobs, {details_removed} details removed (total: {total_removed})")
+            # Run deduplication for job_chunks table
+            logger.info("Deduplicating job_chunks table...")
+            chunks_removed = deduplicate("job_chunks")
+            self.stats["chunks_removed"] = chunks_removed
+            
+            total_removed = jobs_removed + details_removed + chunks_removed
+            logger.info(
+                f"Deduplication completed: {jobs_removed} jobs, {details_removed} details, "
+                f"{chunks_removed} chunks removed (total: {total_removed})"
+            )
             
             return True
             
@@ -472,8 +484,18 @@ class PipelineOrchestrator:
             os.environ["SUPABASE_URL"] = self.config["supabase_url"]
             os.environ["SUPABASE_SERVICE_ROLE_KEY"] = self.config["supabase_service_role_key"] or ""
 
-            logger.info("Embedding new job descriptions...")
-            backfill(batch_size=50, dry_run=False)
+            # Pass pushed job_ids so backfill only embeds the new jobs
+            pushed_ids = getattr(self, "_pushed_job_ids", None) or []
+            if pushed_ids:
+                logger.info("Embedding %d newly pushed job descriptions...", len(pushed_ids))
+            else:
+                logger.info("No pushed job_ids available — falling back to full scan...")
+
+            backfill(
+                batch_size=50,
+                dry_run=False,
+                job_ids=pushed_ids if pushed_ids else None,
+            )
 
             logger.info("Embedding step completed successfully")
             return True
@@ -505,7 +527,11 @@ class PipelineOrchestrator:
         logger.info(f"S3 Snapshot:         {self.stats['s3_snapshot_path'] or 'Not uploaded'}")
         logger.info(f"Supabase Upserted:   {self.stats['supabase_upserted']}")
         logger.info(f"Supabase Skipped:    {self.stats['supabase_skipped']}")
-        logger.info(f"Duplicates Removed:  {self.stats['duplicates_removed']} jobs, {self.stats['details_removed']} details")
+        logger.info(
+            f"Duplicates Removed:  {self.stats['duplicates_removed']} jobs, "
+            f"{self.stats['details_removed']} details, "
+            f"{self.stats['chunks_removed']} chunks"
+        )
         logger.info("")
         
         if self.stats["errors"]:
