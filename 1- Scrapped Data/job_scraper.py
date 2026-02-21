@@ -4,8 +4,8 @@ Multi-Country Optimization Job Scraper
 Scrapes Operations Research & Optimization jobs across multiple countries
 
 Usage:
-    python run_netherlands_indeed_linkedin.py --jobs 50
-    python run_netherlands_indeed_linkedin.py --jobs 30 --countries "USA,UK,Germany"
+    python job_scraper.py --jobs 50
+    python job_scraper.py --jobs 30 --countries "USA,UK,Germany"
 """
 
 import asyncio
@@ -1072,11 +1072,11 @@ async def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python run_netherlands_indeed_linkedin.py --jobs 50
-  python run_netherlands_indeed_linkedin.py --jobs 30 --countries "USA,UK,Germany"
-  python run_netherlands_indeed_linkedin.py --jobs 20 --countries "Netherlands"
-  python run_netherlands_indeed_linkedin.py --batch --delay 60  # All countries with 60min delays
-  python run_netherlands_indeed_linkedin.py --batch --delay 30 --countries "USA,UK,Germany"
+  python job_scraper.py --jobs 50
+  python job_scraper.py --jobs 30 --countries "USA,UK,Germany"
+  python job_scraper.py --jobs 20 --countries "Netherlands"
+  python job_scraper.py --batch --delay 60  # All countries with 60min delays
+  python job_scraper.py --batch --delay 30 --countries "USA,UK,Germany"
         """
     )
 

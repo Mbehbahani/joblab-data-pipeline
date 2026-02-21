@@ -55,7 +55,7 @@ echo "NEXT_PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud" > .env.local
 ```bash
 # Step 1: Scraping
 cd "1- Scrapped Data"
-python run_netherlands_indeed_linkedin.py --jobs 30 --countries "USA,UK"
+python job_scraper.py --jobs 30 --countries "USA,UK"
 
 # Step 2: Preprocessing
 cd "../2- Preprocessed"
@@ -220,7 +220,7 @@ JOB_DB_PATH=./restored_jobs.db CLEAR_CONVEX=true npx tsx "4- convex/seedData.ts"
 ```
 5 -Wrap/
 ├── 1- Scrapped Data/
-│   ├── run_netherlands_indeed_linkedin.py  # Scraping script
+│   ├── job_scraper.py  # Scraping script
 │   ├── jobs.db                             # Raw scraped data
 │   └── Report1.txt
 ├── 2- Preprocessed/
@@ -286,3 +286,4 @@ See [RUNBOOK.md](RUNBOOK.md) for detailed troubleshooting and operations guide.
 ## 📄 License
 
 Private - Internal use only.
+

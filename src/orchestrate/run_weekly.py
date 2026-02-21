@@ -199,7 +199,7 @@ class PipelineOrchestrator:
         # Scraper will use DEFAULT_COUNTRIES_INDEED and DEFAULT_COUNTRIES_LINKEDIN
         args = []
         
-        script = SCRAPE_DIR / "run_netherlands_indeed_linkedin.py"
+        script = SCRAPE_DIR / "job_scraper.py"
         success = self.run_step("Scraping", script, args)
         
         if success and output_db.exists():
