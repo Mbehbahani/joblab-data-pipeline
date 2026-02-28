@@ -56,23 +56,12 @@ def get_tool_names() -> set:
     with open(TOOLS_REFERENCE_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    # Collect tool names (exact match against comma-separated skills values)
     names = {t["name"] for t in data.get("tools", []) if t.get("name")}
-    # Also add category names that were previously used as skill categories
-    # (Pyomo, OR-Tools, GAMS, AMPL, CPLEX, Gurobi were listed as categories in skills_reference.json)
-    legacy_categories = {"Pyomo", "OR-Tools", "GAMS", "AMPL", "CPLEX", "Gurobi"}
+    # Legacy category names that appeared in skills column before the split
+    legacy_categories = {"Pyomo", "OR-Tools", "GAMS", "AMPL", "CPLEX", "Gurobi", "Python", "R"}
     names.update(legacy_categories)
     print(f"✓ Loaded {len(names)} tool names to match against skills")
     return names
-
-
-def headers():
-    return {
-        "apikey": SUPABASE_SERVICE_ROLE_KEY,
-        "Authorization": f"Bearer {SUPABASE_SERVICE_ROLE_KEY}",
-        "Content-Type": "application/json",
-        "Prefer": "return=minimal",
-    }
 
 
 def add_tools_column():
@@ -150,53 +139,63 @@ def separate_skills_and_tools(jobs, tool_names):
     print("STEP 3: Separate tools from skills")
     print("=" * 60)
     
-    updates = []  # list of (id, new_skills, new_tools)
+    updates = []  # list of dicts with id, new_skills, new_tools
     
     jobs_updated = 0
-    jobs_already_done = 0
+    jobs_no_change = 0
     jobs_no_skills = 0
     
     for job in jobs:
         job_id = job["id"]
         skills_str = job.get("skills") or ""
-        existing_tools = job.get("tools") or ""
+        existing_tools_str = job.get("tools") or ""
         
-        # Skip if already migrated (tools column is populated)
-        if existing_tools.strip():
-            jobs_already_done += 1
-            continue
-        
-        if not skills_str.strip():
+        if not skills_str.strip() and not existing_tools_str.strip():
             jobs_no_skills += 1
             continue
         
-        # Split comma-separated values
-        items = [s.strip() for s in skills_str.split(",") if s.strip()]
+        # Split comma-separated skills
+        items = [s.strip() for s in skills_str.split(",") if s.strip()] if skills_str.strip() else []
+        existing_tools = [t.strip() for t in existing_tools_str.split(",") if t.strip()] if existing_tools_str.strip() else []
         
         # Separate
-        new_skills = []
-        new_tools = []
+        new_skills = [item for item in items if item not in tool_names]
+        found_tools = [item for item in items if item in tool_names]
         
-        for item in items:
-            if item in tool_names:
-                new_tools.append(item)
-            else:
-                new_skills.append(item)
+        # Merge with existing tools (avoid duplicates)
+        merged_tools = existing_tools + [t for t in found_tools if t not in existing_tools]
         
-        if new_tools:
+        # Only update if something changed
+        new_skills_str = ", ".join(new_skills) if new_skills else None
+        new_tools_str = ", ".join(merged_tools) if merged_tools else None
+        
+        skills_changed = (new_skills_str or "") != skills_str
+        tools_changed = (new_tools_str or "") != existing_tools_str
+        
+        if skills_changed or tools_changed:
             updates.append({
                 "id": job_id,
-                "skills": ", ".join(new_skills) if new_skills else None,
-                "tools": ", ".join(new_tools),
+                "skills": new_skills_str,
+                "tools": new_tools_str,
             })
             jobs_updated += 1
+        else:
+            jobs_no_change += 1
     
-    print(f"  Jobs to update:      {jobs_updated}")
-    print(f"  Jobs already done:   {jobs_already_done}")
-    print(f"  Jobs with no skills: {jobs_no_skills}")
-    print(f"  Jobs unchanged:      {len(jobs) - jobs_updated - jobs_already_done - jobs_no_skills}")
+    print(f"  Jobs to update:    {jobs_updated}")
+    print(f"  Jobs unchanged:    {jobs_no_change}")
+    print(f"  Jobs with no data: {jobs_no_skills}")
     
     return updates
+
+
+def headers():
+    return {
+        "apikey": SUPABASE_SERVICE_ROLE_KEY,
+        "Authorization": f"Bearer {SUPABASE_SERVICE_ROLE_KEY}",
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal",
+    }
 
 
 def apply_updates(updates):

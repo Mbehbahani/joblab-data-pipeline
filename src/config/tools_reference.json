@@ -1,13 +1,29 @@
 {
-  "total_tools": 21,
-  "description": "Optimization solvers, modeling languages, specialized OR tools, and related workflow/MLOps tools. These are extracted separately from general skills.",
+  "total_tools": 23,
+  "description": "Optimization solvers, modeling languages, specialized OR tools, core programming languages, and related workflow/MLOps tools. These are extracted separately from general skills.",
   "categories": [
     "Optimization Solvers",
     "Modeling Languages",
     "Optimization Libraries",
-    "MLOps & Workflow Tools"
+    "MLOps & Workflow Tools",
+    "Programming Languages"
   ],
   "tools": [
+    {
+      "name": "Python",
+      "category": "Programming Languages",
+      "patterns": ["\\bPYTHON\\b", "\\bPython\\b", "\\bpython\\b"]
+    },
+    {
+      "name": "R",
+      "category": "Programming Languages",
+      "patterns": [
+        "\\bR\\s+programming\\b", "\\bR\\s+language\\b", "\\bR\\s+Studio\\b", "\\bRStudio\\b",
+        "\\bR\\s*\\(programming\\)\\b", "\\bprogramming\\s+in\\s+R\\b", "\\bexperience\\s+(with|in)\\s+R\\b",
+        "\\bproficiency\\s+in\\s+R\\b", "\\bPython,\\s*R\\b", "\\bR,\\s*Python\\b", "\\bR/Python\\b",
+        "\\bPython/R\\b", "\\bstatistical\\s+software.*\\bR\\b", "\\bknowledge\\s+of\\s+R\\b"
+      ]
+    },
     {
       "name": "Gurobi",
       "category": "Optimization Solvers",

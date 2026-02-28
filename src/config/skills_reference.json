@@ -1,751 +1,1154 @@
 {
-  "total_skills": 121,
-  "categories": [
-    "Python",
-    "R",
-    "Natural Language Processing",
-    "Generative AI",
-    "Programming Languages",
-    "Data Science & Analytics", 
-    "Machine Learning",
-    "Optimization & Operations Research",
-    "Statistics & Probability",
-    "Databases & Data Storage",
-    "Big Data & Distributed Systems",
-    "Cloud & DevOps",
-    "Backend Development",
-    "Frontend Development",
-    "Software Engineering Practices",
-    "APIs & Integration",
-    "Data Engineering",
-    "Visualization & BI",
-    "Mathematical Modeling",
-    "AI & Advanced Modeling",
-    "Research & Scientific Computing",
-    "Product & Business Knowledge",
-    "Soft & Managerial Skills",
-    "Security & Compliance"
-  ],
-  "skills": [
-    {
-      "name": "Python",
-      "category": "Python",
-      "patterns": ["\\bPYTHON\\b", "\\bPython\\b", "\\bpython\\b"]
-    },
-    {
-      "name": "R",
-      "category": "R", 
-      "patterns": [
-        "\\bR\\s+programming\\b", "\\bR\\s+language\\b", "\\bR\\s+Studio\\b", "\\bRStudio\\b",
-        "\\bR\\s*\\(programming\\)\\b", "\\bprogramming\\s+in\\s+R\\b", "\\bexperience\\s+(with|in)\\s+R\\b",
-        "\\bproficiency\\s+in\\s+R\\b", "\\bPython,\\s*R\\b", "\\bR,\\s*Python\\b", "\\bR/Python\\b",
-        "\\bPython/R\\b", "\\bstatistical\\s+software.*\\bR\\b", "\\bknowledge\\s+of\\s+R\\b"
-      ]
-    },
-    {
-      "name": "SQL",
-      "category": "Programming Languages",
-      "patterns": ["\\bSQL\\b", "\\bSQL\\b", "\\bsql\\b"]
-    },
-    {
-      "name": "Java",
-      "category": "Programming Languages",
-      "patterns": ["\\bJAVA\\b", "\\bJava\\b", "\\bjava\\b"]
-    },
-    {
-      "name": "JavaScript",
-      "category": "Programming Languages",
-      "patterns": ["\\bJAVASCRIPT\\b", "\\bJavaScript\\b", "\\bjavascript\\b"]
-    },
-    {
-      "name": "TypeScript",
-      "category": "Programming Languages",
-      "patterns": ["\\bTYPESCRIPT\\b", "\\bTypeScript\\b", "\\btypescript\\b"]
-    },
-    {
-      "name": "Go",
-      "category": "Programming Languages",
-      "patterns": [
-        "\\bGolang\\b", "\\bGOLANG\\b", "\\bGo\\s+programming\\b", "\\bGo\\s+language\\b",
-        "\\bGo\\s*\\(Golang\\)\\b", "\\bprogramming\\s+in\\s+Go\\b", "\\bexperience\\s+(with|in)\\s+Go\\b"
-      ]
-    },
-    {
-      "name": "C#",
-      "category": "Programming Languages",
-      "patterns": ["\\bC\\#\\b", "\\bC\\#\\b", "\\bc\\#\\b"]
-    },
-    {
-      "name": "C++",
-      "category": "Programming Languages", 
-      "patterns": ["\\bC\\+\\+\\b", "\\bC\\+\\+\\b", "\\bc\\+\\+\\b"]
-    },
-    {
-      "name": "C",
-      "category": "Programming Languages",
-      "patterns": [
-        "\\bC\\s+programming\\b", "\\bC\\s+language\\b", "\\bC/C\\+\\+\\b", "\\bC,\\s*C\\+\\+\\b",
-        "\\bprogramming\\s+in\\s+C\\b", "\\bexperience\\s+(with|in)\\s+C\\b", "\\bC\\s+and\\s+C\\+\\+\\b"
-      ]
-    },
-    {
-      "name": "Rust",
-      "category": "Programming Languages",
-      "patterns": ["\\bRUST\\b", "\\bRust\\b", "\\brust\\b"]
-    },
-    {
-      "name": "Scala",
-      "category": "Programming Languages",
-      "patterns": ["\\bSCALA\\b", "\\bScala\\b", "\\bscala\\b"]
-    },
-    {
-      "name": "Kotlin",
-      "category": "Programming Languages",
-      "patterns": ["\\bKOTLIN\\b", "\\bKotlin\\b", "\\bkotlin\\b"]
-    },
-    {
-      "name": "Swift",
-      "category": "Programming Languages",
-      "patterns": ["\\bSWIFT\\b", "\\bSwift\\b", "\\bswift\\b"]
-    },
-    {
-      "name": "PHP",
-      "category": "Programming Languages",
-      "patterns": ["\\bPHP\\b", "\\bPHP\\b", "\\bphp\\b"]
-    },
-    {
-      "name": "Ruby",
-      "category": "Programming Languages",
-      "patterns": ["\\bRUBY\\b", "\\bRuby\\b", "\\bruby\\b"]
-    },
-    {
-      "name": "Data Analysis",
-      "category": "Data Science & Analytics",
-      "patterns": [
-        "\\bDATA\\s+ANALYSIS\\b", "\\bData\\s+Analysis\\b", "\\bdata\\s+analysis\\b",
-        "\\bExploratory\\s+Data\\s+Analysis\\b", "\\bAd-hoc\\s+Analysis\\b", "\\bStatistical\\s+Analysis\\b"
-      ]
-    },
-    {
-      "name": "Data Visualization",
-      "category": "Data Science & Analytics",
-      "patterns": [
-        "\\bDATA\\s+VISUALIZATION\\b", "\\bData\\s+Visualization\\b", "\\bdata\\s+visualization\\b",
-        "\\bData\\s+Storytelling\\b", "\\bDashboards\\b", "\\bReporting\\b"
-      ]
-    },
-    {
-      "name": "Business Analytics",
-      "category": "Data Science & Analytics",
-      "patterns": [
-        "\\bBUSINESS\\s+ANALYTICS\\b", "\\bBusiness\\s+Analytics\\b", "\\bbusiness\\s+analytics\\b",
-        "\\bProduct\\s+Analytics\\b", "\\bCustomer\\s+Analytics\\b", "\\bMarketing\\s+Analytics\\b"
-      ]
-    },
-    {
-      "name": "Predictive Analytics",
-      "category": "Data Science & Analytics",
-      "patterns": [
-        "\\bPREDICTIVE\\s+ANALYTICS\\b", "\\bPredictive\\s+Analytics\\b", "\\bpredictive\\s+analytics\\b",
-        "\\bPrescriptive\\s+Analytics\\b", "\\bDescriptive\\s+Analytics\\b"
-      ]
-    },
-    {
-      "name": "A/B Testing",
-      "category": "Data Science & Analytics",
-      "patterns": [
-        "\\bA/B\\s+TESTING\\b", "\\bA/B\\s+Testing\\b", "\\ba/b\\s+testing\\b",
-        "\\bExperimental\\s+Design\\b", "\\bHypothesis\\s+Testing\\b"
-      ]
-    },
-    {
-      "name": "Machine Learning",
-      "category": "Machine Learning",
-      "patterns": [
-        "\\bMACHINE\\s+LEARNING\\b", "\\bMachine\\s+Learning\\b", "\\bmachine\\s+learning\\b",
-        "\\bML\\b", "\\bSupervised\\s+Learning\\b", "\\bUnsupervised\\s+Learning\\b"
-      ]
-    },
-    {
-      "name": "Deep Learning",
-      "category": "Machine Learning",
-      "patterns": [
-        "\\bDEEP\\s+LEARNING\\b", "\\bDeep\\s+Learning\\b", "\\bdeep\\s+learning\\b",
-        "\\bNeural\\s+Networks\\b", "\\bCNNs\\b", "\\bRNN\\b", "\\bLSTM\\b"
-      ]
-    },
-    {
-      "name": "Natural Language Processing",
-      "category": "Natural Language Processing",
-      "patterns": [
-        "\\bNATURAL\\s+LANGUAGE\\s+PROCESSING\\b", "\\bNatural\\s+Language\\s+Processing\\b",
-        "\\bNLP\\b", "\\bNER\\b", "\\bText\\s+Classification\\b", "\\bSentiment\\s+Analysis\\b"
-      ]
-    },
-    {
-      "name": "Computer Vision",
-      "category": "Machine Learning",
-      "patterns": [
-        "\\bCOMPUTER\\s+VISION\\b", "\\bComputer\\s+Vision\\b", "\\bcomputer\\s+vision\\b",
-        "\\bOCR\\b", "\\bYOLO\\b", "\\bImage\\s+Processing\\b"
-      ]
-    },
-    {
-      "name": "Reinforcement Learning",
-      "category": "Machine Learning",
-      "patterns": [
-        "\\bREINFORCEMENT\\s+LEARNING\\b", "\\bReinforcement\\s+Learning\\b", "\\breinforcement\\s+learning\\b",
-        "\\bRL\\b", "\\bRLHF\\b"
-      ]
-    },
-    {
-      "name": "Mathematical Programming",
-      "category": "Optimization & Operations Research",
-      "patterns": [
-        "\\bMATHEMATICAL\\s+PROGRAMMING\\b", "\\bMathematical\\s+Programming\\b",
-        "\\bLinear\\s+Programming\\b", "\\bInteger\\s+Programming\\b", "\\bMixed\\s+Integer\\b"
-      ]
-    },
-    {
-      "name": "Statistics",
-      "category": "Statistics & Probability",
-      "patterns": [
-        "\\bSTATISTICS\\b", "\\bStatistics\\b", "\\bstatistics\\b",
-        "\\bStatistical\\s+Analysis\\b", "\\bStatistical\\s+Modeling\\b", "\\bStatistical\\s+Inference\\b"
-      ]
-    },
-    {
-      "name": "Probability Theory",
-      "category": "Statistics & Probability",
-      "patterns": [
-        "\\bPROBABILITY\\s+THEORY\\b", "\\bProbability\\s+Theory\\b", "\\bprobability\\s+theory\\b",
-        "\\bBayesian\\s+Statistics\\b", "\\bStochastic\\s+Processes\\b"
-      ]
-    },
-    {
-      "name": "Regression Analysis",
-      "category": "Statistics & Probability",
-      "patterns": [
-        "\\bREGRESSION\\s+ANALYSIS\\b", "\\bRegression\\s+Analysis\\b", "\\bregression\\s+analysis\\b",
-        "\\bRegression\\b", "\\bLinear\\s+Regression\\b", "\\bLogistic\\s+Regression\\b"
-      ]
-    },
-    {
-      "name": "Time Series Analysis",
-      "category": "Statistics & Probability",
-      "patterns": [
-        "\\bTIME\\s+SERIES\\s+ANALYSIS\\b", "\\bTime\\s+Series\\s+Analysis\\b", "\\btime\\s+series\\s+analysis\\b",
-        "\\bTime\\s+Series\\b", "\\bForecasting\\b", "\\bTrend\\s+Analysis\\b"
-      ]
-    },
-    {
-      "name": "PostgreSQL",
-      "category": "Databases & Data Storage",
-      "patterns": ["\\bPOSTGRESQL\\b", "\\bPostgreSQL\\b", "\\bpostgresql\\b", "\\bPostgres\\b"]
-    },
-    {
-      "name": "MySQL",
-      "category": "Databases & Data Storage",
-      "patterns": ["\\bMYSQL\\b", "\\bMySQL\\b", "\\bmysql\\b"]
-    },
-    {
-      "name": "MongoDB",
-      "category": "Databases & Data Storage",
-      "patterns": ["\\bMONGODB\\b", "\\bMongoDB\\b", "\\bmongodb\\b"]
-    },
-    {
-      "name": "Redis",
-      "category": "Databases & Data Storage",
-      "patterns": ["\\bREDIS\\b", "\\bRedis\\b", "\\bredis\\b"]
-    },
-    {
-      "name": "Elasticsearch",
-      "category": "Databases & Data Storage",
-      "patterns": ["\\bELASTICSEARCH\\b", "\\bElasticsearch\\b", "\\belasticsearch\\b"]
-    },
-    {
-      "name": "NoSQL",
-      "category": "Databases & Data Storage",
-      "patterns": [
-        "\\bNOSQL\\b", "\\bNoSQL\\b", "\\bnosql\\b", "\\bCassandra\\b", "\\bDynamoDB\\b",
-        "\\bCouchDB\\b", "\\bNeo4J\\b"
-      ]
-    },
-    {
-      "name": "Vector Databases",
-      "category": "Databases & Data Storage",
-      "patterns": [
-        "\\bVECTOR\\s+DATABASE\\b", "\\bVector\\s+Database\\b", "\\bvector\\s+database\\b",
-        "\\bPinecone\\b", "\\bWeaviate\\b", "\\bQdrant\\b", "\\bFAISS\\b", "\\bChroma\\b"
-      ]
-    },
-    {
-      "name": "Apache Spark",
-      "category": "Big Data & Distributed Systems",
-      "patterns": [
-        "\\bAPACHE\\s+SPARK\\b", "\\bApache\\s+Spark\\b", "\\bapache\\s+spark\\b",
-        "\\bSpark\\s+SQL\\b", "\\bSpark\\s+DataFrame\\b", "\\bSpark\\s+Streaming\\b", "\\bPySpark\\b"
-      ]
-    },
-    {
-      "name": "Hadoop",
-      "category": "Big Data & Distributed Systems",
-      "patterns": [
-        "\\bHADOOP\\b", "\\bHadoop\\b", "\\bhadoop\\b", "\\bApache\\s+Hadoop\\b",
-        "\\bHDFS\\b", "\\bMapReduce\\b", "\\bYARN\\b"
-      ]
-    },
-    {
-      "name": "Apache Kafka",
-      "category": "Big Data & Distributed Systems",
-      "patterns": [
-        "\\bAPACHE\\s+KAFKA\\b", "\\bApache\\s+Kafka\\b", "\\bapache\\s+kafka\\b",
-        "\\bKafka\\b", "\\bStream\\s+Processing\\b"
-      ]
-    },
-    {
-      "name": "Big Data",
-      "category": "Big Data & Distributed Systems",
-      "patterns": [
-        "\\bBIG\\s+DATA\\b", "\\bBig\\s+Data\\b", "\\bbig\\s+data\\b",
-        "\\bApache\\s+Flink\\b", "\\bApache\\s+Beam\\b", "\\bApache\\s+Airflow\\b"
-      ]
-    },
-    {
-      "name": "AWS",
-      "category": "Cloud & DevOps",
-      "patterns": [
-        "\\bAWS\\b", "\\bAmazon\\s+Web\\s+Services\\b", "\\bAWS\\s+Lambda\\b", "\\bAWS\\s+S3\\b",
-        "\\bAWS\\s+EC2\\b", "\\bAWS\\s+RDS\\b", "\\bAWS\\s+Glue\\b", "\\bAWS\\s+Redshift\\b"
-      ]
-    },
-    {
-      "name": "Azure",
-      "category": "Cloud & DevOps",
-      "patterns": [
-        "\\bAZURE\\b", "\\bAzure\\b", "\\bazure\\b", "\\bMicrosoft\\s+Azure\\b",
-        "\\bAzure\\s+Functions\\b", "\\bAzure\\s+Data\\s+Factory\\b", "\\bAzure\\s+ML\\b"
-      ]
-    },
-    {
-      "name": "Google Cloud Platform",
-      "category": "Cloud & DevOps",
-      "patterns": [
-        "\\bGOOGLE\\s+CLOUD\\s+PLATFORM\\b", "\\bGoogle\\s+Cloud\\s+Platform\\b", "\\bGCP\\b",
-        "\\bBigQuery\\b", "\\bVertex\\s+AI\\b", "\\bGoogle\\s+Cloud\\s+Functions\\b"
-      ]
-    },
-    {
-      "name": "Docker",
-      "category": "Cloud & DevOps",
-      "patterns": [
-        "\\bDOCKER\\b", "\\bDocker\\b", "\\bdocker\\b", "\\bDocker\\s+Compose\\b",
-        "\\bDocker\\s+Containers\\b", "\\bContainerization\\b"
-      ]
-    },
-    {
-      "name": "Kubernetes",
-      "category": "Cloud & DevOps",
-      "patterns": [
-        "\\bKUBERNETES\\b", "\\bKubernetes\\b", "\\bkubernetes\\b", "\\bK8s\\b",
-        "\\bHelm\\b", "\\bKubeflow\\b"
-      ]
-    },
-    {
-      "name": "CI/CD",
-      "category": "Cloud & DevOps",
-      "patterns": [
-        "\\bCI/CD\\b", "\\bCI/CD\\b", "\\bci/cd\\b", "\\bJenkins\\b", "\\bGitHub\\s+Actions\\b",
-        "\\bGitLab\\s+CI\\b", "\\bTravis\\s+CI\\b", "\\bCircleCI\\b"
-      ]
-    },
-    {
-      "name": "Terraform",
-      "category": "Cloud & DevOps",
-      "patterns": [
-        "\\bTERRAFORM\\b", "\\bTerraform\\b", "\\bterraform\\b",
-        "\\bInfrastructure\\s+as\\s+Code\\b", "\\bIaC\\b"
-      ]
-    },
-    {
-      "name": "DevOps",
-      "category": "Cloud & DevOps",
-      "patterns": [
-        "\\bDEVOPS\\b", "\\bDevOps\\b", "\\bdevops\\b", "\\bAnsible\\b", "\\bPuppet\\b",
-        "\\bChef\\b", "\\bMonitoring\\b", "\\bPrometheus\\b", "\\bGrafana\\b"
-      ]
-    },
-    {
-      "name": "Node.js",
-      "category": "Backend Development",
-      "patterns": ["\\bNODE\\.JS\\b", "\\bNode\\.js\\b", "\\bnode\\.js\\b", "\\bNodeJS\\b"]
-    },
-    {
-      "name": "Express.js",
-      "category": "Backend Development",
-      "patterns": ["\\bEXPRESS\\.JS\\b", "\\bExpress\\.js\\b", "\\bexpress\\.js\\b", "\\bExpress\\b"]
-    },
-    {
-      "name": "Django",
-      "category": "Backend Development",
-      "patterns": ["\\bDJANGO\\b", "\\bDjango\\b", "\\bdjango\\b"]
-    },
-    {
-      "name": "Flask",
-      "category": "Backend Development",
-      "patterns": ["\\bFLASK\\b", "\\bFlask\\b", "\\bflask\\b"]
-    },
-    {
-      "name": "FastAPI",
-      "category": "Backend Development",
-      "patterns": ["\\bFASTAPI\\b", "\\bFastAPI\\b", "\\bfastapi\\b"]
-    },
-    {
-      "name": "Spring Framework",
-      "category": "Backend Development",
-      "patterns": [
-        "\\bSPRING\\s+FRAMEWORK\\b", "\\bSpring\\s+Framework\\b", "\\bspring\\s+framework\\b",
-        "\\bSpring\\s+Boot\\b", "\\bSpring\\b"
-      ]
-    },
-    {
-      "name": ".NET",
-      "category": "Backend Development",
-      "patterns": ["\\b\\.NET\\b", "\\b\\.NET\\b", "\\b\\.net\\b", "\\bASP\\.NET\\b"]
-    },
-    {
-      "name": "Ruby on Rails",
-      "category": "Backend Development",
-      "patterns": [
-        "\\bRUBY\\s+ON\\s+RAILS\\b", "\\bRuby\\s+On\\s+Rails\\b", "\\bruby\\s+on\\s+rails\\b",
-        "\\bRails\\b"
-      ]
-    },
-    {
-      "name": "React",
-      "category": "Frontend Development",
-      "patterns": [
-        "\\bREACT\\b", "\\bReact\\b", "\\breact\\b", "\\bReact\\s+Native\\b",
-        "\\bReact\\s+Query\\b", "\\bRedux\\b", "\\bZustand\\b"
-      ]
-    },
-    {
-      "name": "Vue.js",
-      "category": "Frontend Development",
-      "patterns": ["\\bVUE\\.JS\\b", "\\bVue\\.js\\b", "\\bvue\\.js\\b", "\\bVue\\b"]
-    },
-    {
-      "name": "Angular",
-      "category": "Frontend Development",
-      "patterns": ["\\bANGULAR\\b", "\\bAngular\\b", "\\bangular\\b"]
-    },
-    {
-      "name": "Next.js",
-      "category": "Frontend Development",
-      "patterns": ["\\bNEXT\\.JS\\b", "\\bNext\\.js\\b", "\\bnext\\.js\\b", "\\bNextJS\\b"]
-    },
-    {
-      "name": "Frontend Technologies",
-      "category": "Frontend Development",
-      "patterns": [
-        "\\bHTML5\\b", "\\bCSS3\\b", "\\bTailwind\\s+CSS\\b", "\\bBootstrap\\b",
-        "\\bSASS\\b", "\\bLESS\\b", "\\bWebpack\\b", "\\bVite\\b"
-      ]
-    },
-    {
-      "name": "Mobile Development",
-      "category": "Frontend Development",
-      "patterns": [
-        "\\bMOBILE\\s+DEVELOPMENT\\b", "\\bMobile\\s+Development\\b", "\\bmobile\\s+development\\b",
-        "\\biOS\\s+Development\\b", "\\bAndroid\\s+Development\\b", "\\bFlutter\\b", "\\bReact\\s+Native\\b"
-      ]
-    },
-    {
-      "name": "Git",
-      "category": "Software Engineering Practices",
-      "patterns": [
-        "\\bGIT\\b", "\\bGit\\b", "\\bgit\\b", "\\bGitHub\\b", "\\bGitLab\\b",
-        "\\bVersion\\s+Control\\b", "\\bSource\\s+Control\\b"
-      ]
-    },
-    {
-      "name": "Testing",
-      "category": "Software Engineering Practices",
-      "patterns": [
-        "\\bUNIT\\s+TESTING\\b", "\\bUnit\\s+Testing\\b", "\\bunit\\s+testing\\b",
-        "\\bJest\\b", "\\bPytest\\b", "\\bJUnit\\b", "\\bSelenium\\b", "\\bCypress\\b"
-      ]
-    },
-    {
-      "name": "Agile Methodology",
-      "category": "Software Engineering Practices",
-      "patterns": [
-        "\\bAGILE\\s+METHODOLOGY\\b", "\\bAgile\\s+Methodology\\b", "\\bagile\\s+methodology\\b",
-        "\\bScrum\\b", "\\bKanban\\b", "\\bJIRA\\b"
-      ]
-    },
-    {
-      "name": "Code Quality",
-      "category": "Software Engineering Practices",
-      "patterns": [
-        "\\bCODE\\s+REVIEW\\b", "\\bCode\\s+Review\\b", "\\bcode\\s+review\\b",
-        "\\bSOLID\\s+Principles\\b", "\\bDesign\\s+Patterns\\b", "\\bRefactoring\\b"
-      ]
-    },
-    {
-      "name": "REST API",
-      "category": "APIs & Integration",
-      "patterns": [
-        "\\bREST\\s+API\\b", "\\bREST\\s+API\\b", "\\brest\\s+api\\b",
-        "\\bRESTful\\b", "\\bAPI\\s+Design\\b", "\\bHTTP\\b"
-      ]
-    },
-    {
-      "name": "GraphQL",
-      "category": "APIs & Integration",
-      "patterns": ["\\bGRAPHQL\\b", "\\bGraphQL\\b", "\\bgraphql\\b", "\\bApollo\\s+GraphQL\\b"]
-    },
-    {
-      "name": "Microservices",
-      "category": "APIs & Integration",
-      "patterns": [
-        "\\bMICROSERVICES\\b", "\\bMicroservices\\b", "\\bmicroservices\\b",
-        "\\bService\\s+Mesh\\b", "\\bAPI\\s+Gateway\\b"
-      ]
-    },
-    {
-      "name": "Message Queues",
-      "category": "APIs & Integration",
-      "patterns": [
-        "\\bMESSAGE\\s+QUEUES\\b", "\\bMessage\\s+Queues\\b", "\\bmessage\\s+queues\\b",
-        "\\bRabbitMQ\\b", "\\bActiveMQ\\b", "\\bApache\\s+Kafka\\b"
-      ]
-    },
-    {
-      "name": "Data Pipelines",
-      "category": "Data Engineering",
-      "patterns": [
-        "\\bDATA\\s+PIPELINES\\b", "\\bData\\s+Pipelines\\b", "\\bdata\\s+pipelines\\b",
-        "\\bETL\\b", "\\bELT\\b", "\\bData\\s+Orchestration\\b"
-      ]
-    },
-    {
-      "name": "Apache Airflow",
-      "category": "Data Engineering",
-      "patterns": [
-        "\\bAPACHE\\s+AIRFLOW\\b", "\\bApache\\s+Airflow\\b", "\\bapache\\s+airflow\\b",
-        "\\bAirflow\\b", "\\bWorkflow\\s+Orchestration\\b"
-      ]
-    },
-    {
-      "name": "dbt",
-      "category": "Data Engineering",
-      "patterns": [
-        "\\bDBT\\b", "\\bDbt\\b", "\\bdbt\\b", "\\bdata\\s+build\\s+tool\\b",
-        "\\bData\\s+Transformation\\b"
-      ]
-    },
-    {
-      "name": "Data Warehousing",
-      "category": "Data Engineering",
-      "patterns": [
-        "\\bDATA\\s+WAREHOUSE\\b", "\\bData\\s+Warehouse\\b", "\\bdata\\s+warehouse\\b",
-        "\\bData\\s+Warehousing\\b", "\\bDimensional\\s+Modeling\\b", "\\bStar\\s+Schema\\b"
-      ]
-    },
-    {
-      "name": "Data Quality",
-      "category": "Data Engineering",
-      "patterns": [
-        "\\bDATA\\s+QUALITY\\b", "\\bData\\s+Quality\\b", "\\bdata\\s+quality\\b",
-        "\\bData\\s+Validation\\b", "\\bData\\s+Profiling\\b", "\\bGreat\\s+Expectations\\b"
-      ]
-    },
-    {
-      "name": "Tableau",
-      "category": "Visualization & BI",
-      "patterns": ["\\bTABLEAU\\b", "\\bTableau\\b", "\\btableau\\b"]
-    },
-    {
-      "name": "Power BI",
-      "category": "Visualization & BI",
-      "patterns": [
-        "\\bPOWER\\s+BI\\b", "\\bPower\\s+BI\\b", "\\bpower\\s+bi\\b",
-        "\\bPowerBI\\b", "\\bDAX\\b"
-      ]
-    },
-    {
-      "name": "Looker",
-      "category": "Visualization & BI",
-      "patterns": ["\\bLOOKER\\b", "\\bLooker\\b", "\\blooker\\b", "\\bLookML\\b"]
-    },
-    {
-      "name": "Visualization Libraries",
-      "category": "Visualization & BI",
-      "patterns": [
-        "\\bMatplotlib\\b", "\\bSeaborn\\b", "\\bPlotly\\b", "\\bD3\\.js\\b",
-        "\\bggplot2\\b", "\\bStreamlit\\b", "\\bGradio\\b"
-      ]
-    },
-    {
-      "name": "Excel",
-      "category": "Visualization & BI",
-      "patterns": [
-        "\\bEXCEL\\b", "\\bExcel\\b", "\\bexcel\\b", "\\bVLOOKUP\\b", "\\bXLOOKUP\\b",
-        "\\bPivot\\s+Tables\\b", "\\bPower\\s+Query\\b"
-      ]
-    },
-    {
-      "name": "Mathematical Modeling",
-      "category": "Mathematical Modeling",
-      "patterns": [
-        "\\bMATHEMATICAL\\s+MODELING\\b", "\\bMathematical\\s+Modeling\\b", "\\bmathematical\\s+modeling\\b",
-        "\\bOptimization\\s+Modeling\\b", "\\bSimulation\\s+Modeling\\b"
-      ]
-    },
-    {
-      "name": "Simulation",
-      "category": "Mathematical Modeling",
-      "patterns": [
-        "\\bSIMULATION\\b", "\\bSimulation\\b", "\\bsimulation\\b",
-        "\\bMonte\\s+Carlo\\b", "\\bDiscrete\\s+Event\\s+Simulation\\b"
-      ]
-    },
-    {
-      "name": "Generative AI",
-      "category": "Generative AI",
-      "patterns": [
-        "\\bGENERATIVE\\s+AI\\b", "\\bGenerative\\s+AI\\b", "\\bgenerative\\s+ai\\b",
-        "\\bLarge\\s+Language\\s+Models\\b", "\\bLLMs\\b", "\\bGPT\\b", "\\bTransformers\\b"
-      ]
-    },
-    {
-      "name": "LLM Operations",
-      "category": "AI & Advanced Modeling",
-      "patterns": [
-        "\\bLLMOPS\\b", "\\bLLMOps\\b", "\\bllmops\\b", "\\bPrompt\\s+Engineering\\b",
-        "\\bFine-tuning\\b", "\\bRAG\\b", "\\bRetrieval\\s+Augmented\\s+Generation\\b"
-      ]
-    },
-    {
-      "name": "AI Frameworks",
-      "category": "AI & Advanced Modeling",
-      "patterns": [
-        "\\bLangChain\\b", "\\bLlamaIndex\\b", "\\bHugging\\s+Face\\b", "\\bOpenAI\\b",
-        "\\bAnthropic\\b", "\\bClaude\\b", "\\bGemini\\b"
-      ]
-    },
-    {
-      "name": "MLOps",
-      "category": "AI & Advanced Modeling",
-      "patterns": [
-        "\\bMLOPS\\b", "\\bMLOps\\b", "\\bmlops\\b", "\\bModel\\s+Deployment\\b",
-        "\\bModel\\s+Monitoring\\b", "\\bMLflow\\b", "\\bKubeflow\\b"
-      ]
-    },
-    {
-      "name": "Scientific Computing",
-      "category": "Research & Scientific Computing",
-      "patterns": [
-        "\\bSCIENTIFIC\\s+COMPUTING\\b", "\\bScientific\\s+Computing\\b", "\\bscientific\\s+computing\\b",
-        "\\bNumPy\\b", "\\bSciPy\\b", "\\bPandas\\b", "\\bJupyter\\b"
-      ]
-    },
-    {
-      "name": "Research Methods",
-      "category": "Research & Scientific Computing",
-      "patterns": [
-        "\\bRESEARCH\\s+METHODS\\b", "\\bResearch\\s+Methods\\b", "\\bresearch\\s+methods\\b",
-        "\\bExperimental\\s+Design\\b", "\\bCausal\\s+Inference\\b", "\\bUser\\s+Research\\b"
-      ]
-    },
-    {
-      "name": "Technical Writing",
-      "category": "Research & Scientific Computing",
-      "patterns": [
-        "\\bTECHNICAL\\s+WRITING\\b", "\\bTechnical\\s+Writing\\b", "\\btechnical\\s+writing\\b",
-        "\\bDocumentation\\b", "\\bPublic\\s+Speaking\\b"
-      ]
-    },
-    {
-      "name": "Product Management",
-      "category": "Product & Business Knowledge",
-      "patterns": [
-        "\\bPRODUCT\\s+MANAGEMENT\\b", "\\bProduct\\s+Management\\b", "\\bproduct\\s+management\\b",
-        "\\bProduct\\s+Roadmapping\\b", "\\bUser\\s+Stories\\b", "\\bRequirements\\s+Gathering\\b"
-      ]
-    },
-    {
-      "name": "Business Intelligence",
-      "category": "Product & Business Knowledge",
-      "patterns": [
-        "\\bBUSINESS\\s+INTELLIGENCE\\b", "\\bBusiness\\s+Intelligence\\b", "\\bbusiness\\s+intelligence\\b",
-        "\\bBusiness\\s+Analytics\\b", "\\bKPI\\s+Tracking\\b", "\\bMetrics\\s+Analysis\\b"
-      ]
-    },
-    {
-      "name": "Domain Knowledge",
-      "category": "Product & Business Knowledge",
-      "patterns": [
-        "\\bDOMAIN\\s+KNOWLEDGE\\b", "\\bDomain\\s+Knowledge\\b", "\\bdomain\\s+knowledge\\b",
-        "\\bBusiness\\s+Acumen\\b", "\\bIndustry\\s+Knowledge\\b", "\\bMarket\\s+Research\\b"
-      ]
-    },
-    {
-      "name": "Leadership",
-      "category": "Soft & Managerial Skills",
-      "patterns": [
-        "\\bLEADERSHIP\\b", "\\bLeadership\\b", "\\bleadership\\b",
-        "\\bTeam\\s+Management\\b", "\\bMentoring\\b", "\\bCoaching\\b"
-      ]
-    },
-    {
-      "name": "Communication",
-      "category": "Soft & Managerial Skills",
-      "patterns": [
-        "\\bCOMMUNICATION\\b", "\\bCommunication\\b", "\\bcommunication\\b",
-        "\\bPresentation\\s+Skills\\b", "\\bStakeholder\\s+Management\\b", "\\bActive\\s+Listening\\b"
-      ]
-    },
-    {
-      "name": "Problem Solving",
-      "category": "Soft & Managerial Skills",
-      "patterns": [
-        "\\bPROBLEM\\s+SOLVING\\b", "\\bProblem\\s+Solving\\b", "\\bproblem\\s+solving\\b",
-        "\\bCritical\\s+Thinking\\b", "\\bAnalytical\\s+Thinking\\b", "\\bDecision\\s+Making\\b"
-      ]
-    },
-    {
-      "name": "Project Management",
-      "category": "Soft & Managerial Skills",
-      "patterns": [
-        "\\bPROJECT\\s+MANAGEMENT\\b", "\\bProject\\s+Management\\b", "\\bproject\\s+management\\b",
-        "\\bAgile\\b", "\\bScrum\\b", "\\bPRINCE2\\b", "\\bPMP\\b"
-      ]
-    },
-    {
-      "name": "Cybersecurity",
-      "category": "Security & Compliance",
-      "patterns": [
-        "\\bCYBERSECURITY\\b", "\\bCybersecurity\\b", "\\bcybersecurity\\b",
-        "\\bInformation\\s+Security\\b", "\\bNetwork\\s+Security\\b", "\\bCloud\\s+Security\\b"
-      ]
-    },
-    {
-      "name": "Security Testing",
-      "category": "Security & Compliance",
-      "patterns": [
-        "\\bSECURITY\\s+TESTING\\b", "\\bSecurity\\s+Testing\\b", "\\bsecurity\\s+testing\\b",
-        "\\bPenetration\\s+Testing\\b", "\\bVulnerability\\s+Assessment\\b", "\\bSAST\\b", "\\bDAST\\b"
-      ]
-    },
-    {
-      "name": "Compliance",
-      "category": "Security & Compliance",
-      "patterns": [
-        "\\bCOMPLIANCE\\b", "\\bCompliance\\b", "\\bcompliance\\b",
-        "\\bGDPR\\b", "\\bHIPAA\\b", "\\bSOC\\s+2\\b", "\\bCompliance\\s+Management\\b"
-      ]
-    }
-  ]
+	"total_skills": 119,
+	"categories": [
+		"Natural Language Processing",
+		"Generative AI",
+		"Programming Languages",
+		"Data Science & Analytics",
+		"Machine Learning",
+		"Optimization & Operations Research",
+		"Statistics & Probability",
+		"Databases & Data Storage",
+		"Big Data & Distributed Systems",
+		"Cloud & DevOps",
+		"Backend Development",
+		"Frontend Development",
+		"Software Engineering Practices",
+		"APIs & Integration",
+		"Data Engineering",
+		"Visualization & BI",
+		"Mathematical Modeling",
+		"AI & Advanced Modeling",
+		"Research & Scientific Computing",
+		"Product & Business Knowledge",
+		"Soft & Managerial Skills",
+		"Security & Compliance"
+	],
+	"skills": [
+		{
+			"name": "SQL",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bSQL\\b",
+				"\\bSQL\\b",
+				"\\bsql\\b"
+			]
+		},
+		{
+			"name": "Java",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bJAVA\\b",
+				"\\bJava\\b",
+				"\\bjava\\b"
+			]
+		},
+		{
+			"name": "JavaScript",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bJAVASCRIPT\\b",
+				"\\bJavaScript\\b",
+				"\\bjavascript\\b"
+			]
+		},
+		{
+			"name": "TypeScript",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bTYPESCRIPT\\b",
+				"\\bTypeScript\\b",
+				"\\btypescript\\b"
+			]
+		},
+		{
+			"name": "Go",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bGolang\\b",
+				"\\bGOLANG\\b",
+				"\\bGo\\s+programming\\b",
+				"\\bGo\\s+language\\b",
+				"\\bGo\\s*\\(Golang\\)\\b",
+				"\\bprogramming\\s+in\\s+Go\\b",
+				"\\bexperience\\s+(with|in)\\s+Go\\b"
+			]
+		},
+		{
+			"name": "C#",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bC\\#\\b",
+				"\\bC\\#\\b",
+				"\\bc\\#\\b"
+			]
+		},
+		{
+			"name": "C++",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bC\\+\\+\\b",
+				"\\bC\\+\\+\\b",
+				"\\bc\\+\\+\\b"
+			]
+		},
+		{
+			"name": "C",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bC\\s+programming\\b",
+				"\\bC\\s+language\\b",
+				"\\bC/C\\+\\+\\b",
+				"\\bC,\\s*C\\+\\+\\b",
+				"\\bprogramming\\s+in\\s+C\\b",
+				"\\bexperience\\s+(with|in)\\s+C\\b",
+				"\\bC\\s+and\\s+C\\+\\+\\b"
+			]
+		},
+		{
+			"name": "Rust",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bRUST\\b",
+				"\\bRust\\b",
+				"\\brust\\b"
+			]
+		},
+		{
+			"name": "Scala",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bSCALA\\b",
+				"\\bScala\\b",
+				"\\bscala\\b"
+			]
+		},
+		{
+			"name": "Kotlin",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bKOTLIN\\b",
+				"\\bKotlin\\b",
+				"\\bkotlin\\b"
+			]
+		},
+		{
+			"name": "Swift",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bSWIFT\\b",
+				"\\bSwift\\b",
+				"\\bswift\\b"
+			]
+		},
+		{
+			"name": "PHP",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bPHP\\b",
+				"\\bPHP\\b",
+				"\\bphp\\b"
+			]
+		},
+		{
+			"name": "Ruby",
+			"category": "Programming Languages",
+			"patterns": [
+				"\\bRUBY\\b",
+				"\\bRuby\\b",
+				"\\bruby\\b"
+			]
+		},
+		{
+			"name": "Data Analysis",
+			"category": "Data Science & Analytics",
+			"patterns": [
+				"\\bDATA\\s+ANALYSIS\\b",
+				"\\bData\\s+Analysis\\b",
+				"\\bdata\\s+analysis\\b",
+				"\\bExploratory\\s+Data\\s+Analysis\\b",
+				"\\bAd-hoc\\s+Analysis\\b",
+				"\\bStatistical\\s+Analysis\\b"
+			]
+		},
+		{
+			"name": "Data Visualization",
+			"category": "Data Science & Analytics",
+			"patterns": [
+				"\\bDATA\\s+VISUALIZATION\\b",
+				"\\bData\\s+Visualization\\b",
+				"\\bdata\\s+visualization\\b",
+				"\\bData\\s+Storytelling\\b",
+				"\\bDashboards\\b",
+				"\\bReporting\\b"
+			]
+		},
+		{
+			"name": "Business Analytics",
+			"category": "Data Science & Analytics",
+			"patterns": [
+				"\\bBUSINESS\\s+ANALYTICS\\b",
+				"\\bBusiness\\s+Analytics\\b",
+				"\\bbusiness\\s+analytics\\b",
+				"\\bProduct\\s+Analytics\\b",
+				"\\bCustomer\\s+Analytics\\b",
+				"\\bMarketing\\s+Analytics\\b"
+			]
+		},
+		{
+			"name": "Predictive Analytics",
+			"category": "Data Science & Analytics",
+			"patterns": [
+				"\\bPREDICTIVE\\s+ANALYTICS\\b",
+				"\\bPredictive\\s+Analytics\\b",
+				"\\bpredictive\\s+analytics\\b",
+				"\\bPrescriptive\\s+Analytics\\b",
+				"\\bDescriptive\\s+Analytics\\b"
+			]
+		},
+		{
+			"name": "A/B Testing",
+			"category": "Data Science & Analytics",
+			"patterns": [
+				"\\bA/B\\s+TESTING\\b",
+				"\\bA/B\\s+Testing\\b",
+				"\\ba/b\\s+testing\\b",
+				"\\bExperimental\\s+Design\\b",
+				"\\bHypothesis\\s+Testing\\b"
+			]
+		},
+		{
+			"name": "Machine Learning",
+			"category": "Machine Learning",
+			"patterns": [
+				"\\bMACHINE\\s+LEARNING\\b",
+				"\\bMachine\\s+Learning\\b",
+				"\\bmachine\\s+learning\\b",
+				"\\bML\\b",
+				"\\bSupervised\\s+Learning\\b",
+				"\\bUnsupervised\\s+Learning\\b"
+			]
+		},
+		{
+			"name": "Deep Learning",
+			"category": "Machine Learning",
+			"patterns": [
+				"\\bDEEP\\s+LEARNING\\b",
+				"\\bDeep\\s+Learning\\b",
+				"\\bdeep\\s+learning\\b",
+				"\\bNeural\\s+Networks\\b",
+				"\\bCNNs\\b",
+				"\\bRNN\\b",
+				"\\bLSTM\\b"
+			]
+		},
+		{
+			"name": "Natural Language Processing",
+			"category": "Natural Language Processing",
+			"patterns": [
+				"\\bNATURAL\\s+LANGUAGE\\s+PROCESSING\\b",
+				"\\bNatural\\s+Language\\s+Processing\\b",
+				"\\bNLP\\b",
+				"\\bNER\\b",
+				"\\bText\\s+Classification\\b",
+				"\\bSentiment\\s+Analysis\\b"
+			]
+		},
+		{
+			"name": "Computer Vision",
+			"category": "Machine Learning",
+			"patterns": [
+				"\\bCOMPUTER\\s+VISION\\b",
+				"\\bComputer\\s+Vision\\b",
+				"\\bcomputer\\s+vision\\b",
+				"\\bOCR\\b",
+				"\\bYOLO\\b",
+				"\\bImage\\s+Processing\\b"
+			]
+		},
+		{
+			"name": "Reinforcement Learning",
+			"category": "Machine Learning",
+			"patterns": [
+				"\\bREINFORCEMENT\\s+LEARNING\\b",
+				"\\bReinforcement\\s+Learning\\b",
+				"\\breinforcement\\s+learning\\b",
+				"\\bRL\\b",
+				"\\bRLHF\\b"
+			]
+		},
+		{
+			"name": "Mathematical Programming",
+			"category": "Optimization & Operations Research",
+			"patterns": [
+				"\\bMATHEMATICAL\\s+PROGRAMMING\\b",
+				"\\bMathematical\\s+Programming\\b",
+				"\\bLinear\\s+Programming\\b",
+				"\\bInteger\\s+Programming\\b",
+				"\\bMixed\\s+Integer\\b"
+			]
+		},
+		{
+			"name": "Statistics",
+			"category": "Statistics & Probability",
+			"patterns": [
+				"\\bSTATISTICS\\b",
+				"\\bStatistics\\b",
+				"\\bstatistics\\b",
+				"\\bStatistical\\s+Analysis\\b",
+				"\\bStatistical\\s+Modeling\\b",
+				"\\bStatistical\\s+Inference\\b"
+			]
+		},
+		{
+			"name": "Probability Theory",
+			"category": "Statistics & Probability",
+			"patterns": [
+				"\\bPROBABILITY\\s+THEORY\\b",
+				"\\bProbability\\s+Theory\\b",
+				"\\bprobability\\s+theory\\b",
+				"\\bBayesian\\s+Statistics\\b",
+				"\\bStochastic\\s+Processes\\b"
+			]
+		},
+		{
+			"name": "Regression Analysis",
+			"category": "Statistics & Probability",
+			"patterns": [
+				"\\bREGRESSION\\s+ANALYSIS\\b",
+				"\\bRegression\\s+Analysis\\b",
+				"\\bregression\\s+analysis\\b",
+				"\\bRegression\\b",
+				"\\bLinear\\s+Regression\\b",
+				"\\bLogistic\\s+Regression\\b"
+			]
+		},
+		{
+			"name": "Time Series Analysis",
+			"category": "Statistics & Probability",
+			"patterns": [
+				"\\bTIME\\s+SERIES\\s+ANALYSIS\\b",
+				"\\bTime\\s+Series\\s+Analysis\\b",
+				"\\btime\\s+series\\s+analysis\\b",
+				"\\bTime\\s+Series\\b",
+				"\\bForecasting\\b",
+				"\\bTrend\\s+Analysis\\b"
+			]
+		},
+		{
+			"name": "PostgreSQL",
+			"category": "Databases & Data Storage",
+			"patterns": [
+				"\\bPOSTGRESQL\\b",
+				"\\bPostgreSQL\\b",
+				"\\bpostgresql\\b",
+				"\\bPostgres\\b"
+			]
+		},
+		{
+			"name": "MySQL",
+			"category": "Databases & Data Storage",
+			"patterns": [
+				"\\bMYSQL\\b",
+				"\\bMySQL\\b",
+				"\\bmysql\\b"
+			]
+		},
+		{
+			"name": "MongoDB",
+			"category": "Databases & Data Storage",
+			"patterns": [
+				"\\bMONGODB\\b",
+				"\\bMongoDB\\b",
+				"\\bmongodb\\b"
+			]
+		},
+		{
+			"name": "Redis",
+			"category": "Databases & Data Storage",
+			"patterns": [
+				"\\bREDIS\\b",
+				"\\bRedis\\b",
+				"\\bredis\\b"
+			]
+		},
+		{
+			"name": "Elasticsearch",
+			"category": "Databases & Data Storage",
+			"patterns": [
+				"\\bELASTICSEARCH\\b",
+				"\\bElasticsearch\\b",
+				"\\belasticsearch\\b"
+			]
+		},
+		{
+			"name": "NoSQL",
+			"category": "Databases & Data Storage",
+			"patterns": [
+				"\\bNOSQL\\b",
+				"\\bNoSQL\\b",
+				"\\bnosql\\b",
+				"\\bCassandra\\b",
+				"\\bDynamoDB\\b",
+				"\\bCouchDB\\b",
+				"\\bNeo4J\\b"
+			]
+		},
+		{
+			"name": "Vector Databases",
+			"category": "Databases & Data Storage",
+			"patterns": [
+				"\\bVECTOR\\s+DATABASE\\b",
+				"\\bVector\\s+Database\\b",
+				"\\bvector\\s+database\\b",
+				"\\bPinecone\\b",
+				"\\bWeaviate\\b",
+				"\\bQdrant\\b",
+				"\\bFAISS\\b",
+				"\\bChroma\\b"
+			]
+		},
+		{
+			"name": "Apache Spark",
+			"category": "Big Data & Distributed Systems",
+			"patterns": [
+				"\\bAPACHE\\s+SPARK\\b",
+				"\\bApache\\s+Spark\\b",
+				"\\bapache\\s+spark\\b",
+				"\\bSpark\\s+SQL\\b",
+				"\\bSpark\\s+DataFrame\\b",
+				"\\bSpark\\s+Streaming\\b",
+				"\\bPySpark\\b"
+			]
+		},
+		{
+			"name": "Hadoop",
+			"category": "Big Data & Distributed Systems",
+			"patterns": [
+				"\\bHADOOP\\b",
+				"\\bHadoop\\b",
+				"\\bhadoop\\b",
+				"\\bApache\\s+Hadoop\\b",
+				"\\bHDFS\\b",
+				"\\bMapReduce\\b",
+				"\\bYARN\\b"
+			]
+		},
+		{
+			"name": "Apache Kafka",
+			"category": "Big Data & Distributed Systems",
+			"patterns": [
+				"\\bAPACHE\\s+KAFKA\\b",
+				"\\bApache\\s+Kafka\\b",
+				"\\bapache\\s+kafka\\b",
+				"\\bKafka\\b",
+				"\\bStream\\s+Processing\\b"
+			]
+		},
+		{
+			"name": "Big Data",
+			"category": "Big Data & Distributed Systems",
+			"patterns": [
+				"\\bBIG\\s+DATA\\b",
+				"\\bBig\\s+Data\\b",
+				"\\bbig\\s+data\\b",
+				"\\bApache\\s+Flink\\b",
+				"\\bApache\\s+Beam\\b",
+				"\\bApache\\s+Airflow\\b"
+			]
+		},
+		{
+			"name": "AWS",
+			"category": "Cloud & DevOps",
+			"patterns": [
+				"\\bAWS\\b",
+				"\\bAmazon\\s+Web\\s+Services\\b",
+				"\\bAWS\\s+Lambda\\b",
+				"\\bAWS\\s+S3\\b",
+				"\\bAWS\\s+EC2\\b",
+				"\\bAWS\\s+RDS\\b",
+				"\\bAWS\\s+Glue\\b",
+				"\\bAWS\\s+Redshift\\b"
+			]
+		},
+		{
+			"name": "Azure",
+			"category": "Cloud & DevOps",
+			"patterns": [
+				"\\bAZURE\\b",
+				"\\bAzure\\b",
+				"\\bazure\\b",
+				"\\bMicrosoft\\s+Azure\\b",
+				"\\bAzure\\s+Functions\\b",
+				"\\bAzure\\s+Data\\s+Factory\\b",
+				"\\bAzure\\s+ML\\b"
+			]
+		},
+		{
+			"name": "Google Cloud Platform",
+			"category": "Cloud & DevOps",
+			"patterns": [
+				"\\bGOOGLE\\s+CLOUD\\s+PLATFORM\\b",
+				"\\bGoogle\\s+Cloud\\s+Platform\\b",
+				"\\bGCP\\b",
+				"\\bBigQuery\\b",
+				"\\bVertex\\s+AI\\b",
+				"\\bGoogle\\s+Cloud\\s+Functions\\b"
+			]
+		},
+		{
+			"name": "Docker",
+			"category": "Cloud & DevOps",
+			"patterns": [
+				"\\bDOCKER\\b",
+				"\\bDocker\\b",
+				"\\bdocker\\b",
+				"\\bDocker\\s+Compose\\b",
+				"\\bDocker\\s+Containers\\b",
+				"\\bContainerization\\b"
+			]
+		},
+		{
+			"name": "Kubernetes",
+			"category": "Cloud & DevOps",
+			"patterns": [
+				"\\bKUBERNETES\\b",
+				"\\bKubernetes\\b",
+				"\\bkubernetes\\b",
+				"\\bK8s\\b",
+				"\\bHelm\\b",
+				"\\bKubeflow\\b"
+			]
+		},
+		{
+			"name": "CI/CD",
+			"category": "Cloud & DevOps",
+			"patterns": [
+				"\\bCI/CD\\b",
+				"\\bCI/CD\\b",
+				"\\bci/cd\\b",
+				"\\bJenkins\\b",
+				"\\bGitHub\\s+Actions\\b",
+				"\\bGitLab\\s+CI\\b",
+				"\\bTravis\\s+CI\\b",
+				"\\bCircleCI\\b"
+			]
+		},
+		{
+			"name": "Terraform",
+			"category": "Cloud & DevOps",
+			"patterns": [
+				"\\bTERRAFORM\\b",
+				"\\bTerraform\\b",
+				"\\bterraform\\b",
+				"\\bInfrastructure\\s+as\\s+Code\\b",
+				"\\bIaC\\b"
+			]
+		},
+		{
+			"name": "DevOps",
+			"category": "Cloud & DevOps",
+			"patterns": [
+				"\\bDEVOPS\\b",
+				"\\bDevOps\\b",
+				"\\bdevops\\b",
+				"\\bAnsible\\b",
+				"\\bPuppet\\b",
+				"\\bChef\\b",
+				"\\bMonitoring\\b",
+				"\\bPrometheus\\b",
+				"\\bGrafana\\b"
+			]
+		},
+		{
+			"name": "Node.js",
+			"category": "Backend Development",
+			"patterns": [
+				"\\bNODE\\.JS\\b",
+				"\\bNode\\.js\\b",
+				"\\bnode\\.js\\b",
+				"\\bNodeJS\\b"
+			]
+		},
+		{
+			"name": "Express.js",
+			"category": "Backend Development",
+			"patterns": [
+				"\\bEXPRESS\\.JS\\b",
+				"\\bExpress\\.js\\b",
+				"\\bexpress\\.js\\b",
+				"\\bExpress\\b"
+			]
+		},
+		{
+			"name": "Django",
+			"category": "Backend Development",
+			"patterns": [
+				"\\bDJANGO\\b",
+				"\\bDjango\\b",
+				"\\bdjango\\b"
+			]
+		},
+		{
+			"name": "Flask",
+			"category": "Backend Development",
+			"patterns": [
+				"\\bFLASK\\b",
+				"\\bFlask\\b",
+				"\\bflask\\b"
+			]
+		},
+		{
+			"name": "FastAPI",
+			"category": "Backend Development",
+			"patterns": [
+				"\\bFASTAPI\\b",
+				"\\bFastAPI\\b",
+				"\\bfastapi\\b"
+			]
+		},
+		{
+			"name": "Spring Framework",
+			"category": "Backend Development",
+			"patterns": [
+				"\\bSPRING\\s+FRAMEWORK\\b",
+				"\\bSpring\\s+Framework\\b",
+				"\\bspring\\s+framework\\b",
+				"\\bSpring\\s+Boot\\b",
+				"\\bSpring\\b"
+			]
+		},
+		{
+			"name": ".NET",
+			"category": "Backend Development",
+			"patterns": [
+				"\\b\\.NET\\b",
+				"\\b\\.NET\\b",
+				"\\b\\.net\\b",
+				"\\bASP\\.NET\\b"
+			]
+		},
+		{
+			"name": "Ruby on Rails",
+			"category": "Backend Development",
+			"patterns": [
+				"\\bRUBY\\s+ON\\s+RAILS\\b",
+				"\\bRuby\\s+On\\s+Rails\\b",
+				"\\bruby\\s+on\\s+rails\\b",
+				"\\bRails\\b"
+			]
+		},
+		{
+			"name": "React",
+			"category": "Frontend Development",
+			"patterns": [
+				"\\bREACT\\b",
+				"\\bReact\\b",
+				"\\breact\\b",
+				"\\bReact\\s+Native\\b",
+				"\\bReact\\s+Query\\b",
+				"\\bRedux\\b",
+				"\\bZustand\\b"
+			]
+		},
+		{
+			"name": "Vue.js",
+			"category": "Frontend Development",
+			"patterns": [
+				"\\bVUE\\.JS\\b",
+				"\\bVue\\.js\\b",
+				"\\bvue\\.js\\b",
+				"\\bVue\\b"
+			]
+		},
+		{
+			"name": "Angular",
+			"category": "Frontend Development",
+			"patterns": [
+				"\\bANGULAR\\b",
+				"\\bAngular\\b",
+				"\\bangular\\b"
+			]
+		},
+		{
+			"name": "Next.js",
+			"category": "Frontend Development",
+			"patterns": [
+				"\\bNEXT\\.JS\\b",
+				"\\bNext\\.js\\b",
+				"\\bnext\\.js\\b",
+				"\\bNextJS\\b"
+			]
+		},
+		{
+			"name": "Frontend Technologies",
+			"category": "Frontend Development",
+			"patterns": [
+				"\\bHTML5\\b",
+				"\\bCSS3\\b",
+				"\\bTailwind\\s+CSS\\b",
+				"\\bBootstrap\\b",
+				"\\bSASS\\b",
+				"\\bLESS\\b",
+				"\\bWebpack\\b",
+				"\\bVite\\b"
+			]
+		},
+		{
+			"name": "Mobile Development",
+			"category": "Frontend Development",
+			"patterns": [
+				"\\bMOBILE\\s+DEVELOPMENT\\b",
+				"\\bMobile\\s+Development\\b",
+				"\\bmobile\\s+development\\b",
+				"\\biOS\\s+Development\\b",
+				"\\bAndroid\\s+Development\\b",
+				"\\bFlutter\\b",
+				"\\bReact\\s+Native\\b"
+			]
+		},
+		{
+			"name": "Git",
+			"category": "Software Engineering Practices",
+			"patterns": [
+				"\\bGIT\\b",
+				"\\bGit\\b",
+				"\\bgit\\b",
+				"\\bGitHub\\b",
+				"\\bGitLab\\b",
+				"\\bVersion\\s+Control\\b",
+				"\\bSource\\s+Control\\b"
+			]
+		},
+		{
+			"name": "Testing",
+			"category": "Software Engineering Practices",
+			"patterns": [
+				"\\bUNIT\\s+TESTING\\b",
+				"\\bUnit\\s+Testing\\b",
+				"\\bunit\\s+testing\\b",
+				"\\bJest\\b",
+				"\\bPytest\\b",
+				"\\bJUnit\\b",
+				"\\bSelenium\\b",
+				"\\bCypress\\b"
+			]
+		},
+		{
+			"name": "Agile Methodology",
+			"category": "Software Engineering Practices",
+			"patterns": [
+				"\\bAGILE\\s+METHODOLOGY\\b",
+				"\\bAgile\\s+Methodology\\b",
+				"\\bagile\\s+methodology\\b",
+				"\\bScrum\\b",
+				"\\bKanban\\b",
+				"\\bJIRA\\b"
+			]
+		},
+		{
+			"name": "Code Quality",
+			"category": "Software Engineering Practices",
+			"patterns": [
+				"\\bCODE\\s+REVIEW\\b",
+				"\\bCode\\s+Review\\b",
+				"\\bcode\\s+review\\b",
+				"\\bSOLID\\s+Principles\\b",
+				"\\bDesign\\s+Patterns\\b",
+				"\\bRefactoring\\b"
+			]
+		},
+		{
+			"name": "REST API",
+			"category": "APIs & Integration",
+			"patterns": [
+				"\\bREST\\s+API\\b",
+				"\\bREST\\s+API\\b",
+				"\\brest\\s+api\\b",
+				"\\bRESTful\\b",
+				"\\bAPI\\s+Design\\b",
+				"\\bHTTP\\b"
+			]
+		},
+		{
+			"name": "GraphQL",
+			"category": "APIs & Integration",
+			"patterns": [
+				"\\bGRAPHQL\\b",
+				"\\bGraphQL\\b",
+				"\\bgraphql\\b",
+				"\\bApollo\\s+GraphQL\\b"
+			]
+		},
+		{
+			"name": "Microservices",
+			"category": "APIs & Integration",
+			"patterns": [
+				"\\bMICROSERVICES\\b",
+				"\\bMicroservices\\b",
+				"\\bmicroservices\\b",
+				"\\bService\\s+Mesh\\b",
+				"\\bAPI\\s+Gateway\\b"
+			]
+		},
+		{
+			"name": "Message Queues",
+			"category": "APIs & Integration",
+			"patterns": [
+				"\\bMESSAGE\\s+QUEUES\\b",
+				"\\bMessage\\s+Queues\\b",
+				"\\bmessage\\s+queues\\b",
+				"\\bRabbitMQ\\b",
+				"\\bActiveMQ\\b",
+				"\\bApache\\s+Kafka\\b"
+			]
+		},
+		{
+			"name": "Data Pipelines",
+			"category": "Data Engineering",
+			"patterns": [
+				"\\bDATA\\s+PIPELINES\\b",
+				"\\bData\\s+Pipelines\\b",
+				"\\bdata\\s+pipelines\\b",
+				"\\bETL\\b",
+				"\\bELT\\b",
+				"\\bData\\s+Orchestration\\b"
+			]
+		},
+		{
+			"name": "Apache Airflow",
+			"category": "Data Engineering",
+			"patterns": [
+				"\\bAPACHE\\s+AIRFLOW\\b",
+				"\\bApache\\s+Airflow\\b",
+				"\\bapache\\s+airflow\\b",
+				"\\bAirflow\\b",
+				"\\bWorkflow\\s+Orchestration\\b"
+			]
+		},
+		{
+			"name": "dbt",
+			"category": "Data Engineering",
+			"patterns": [
+				"\\bDBT\\b",
+				"\\bDbt\\b",
+				"\\bdbt\\b",
+				"\\bdata\\s+build\\s+tool\\b",
+				"\\bData\\s+Transformation\\b"
+			]
+		},
+		{
+			"name": "Data Warehousing",
+			"category": "Data Engineering",
+			"patterns": [
+				"\\bDATA\\s+WAREHOUSE\\b",
+				"\\bData\\s+Warehouse\\b",
+				"\\bdata\\s+warehouse\\b",
+				"\\bData\\s+Warehousing\\b",
+				"\\bDimensional\\s+Modeling\\b",
+				"\\bStar\\s+Schema\\b"
+			]
+		},
+		{
+			"name": "Data Quality",
+			"category": "Data Engineering",
+			"patterns": [
+				"\\bDATA\\s+QUALITY\\b",
+				"\\bData\\s+Quality\\b",
+				"\\bdata\\s+quality\\b",
+				"\\bData\\s+Validation\\b",
+				"\\bData\\s+Profiling\\b",
+				"\\bGreat\\s+Expectations\\b"
+			]
+		},
+		{
+			"name": "Tableau",
+			"category": "Visualization & BI",
+			"patterns": [
+				"\\bTABLEAU\\b",
+				"\\bTableau\\b",
+				"\\btableau\\b"
+			]
+		},
+		{
+			"name": "Power BI",
+			"category": "Visualization & BI",
+			"patterns": [
+				"\\bPOWER\\s+BI\\b",
+				"\\bPower\\s+BI\\b",
+				"\\bpower\\s+bi\\b",
+				"\\bPowerBI\\b",
+				"\\bDAX\\b"
+			]
+		},
+		{
+			"name": "Looker",
+			"category": "Visualization & BI",
+			"patterns": [
+				"\\bLOOKER\\b",
+				"\\bLooker\\b",
+				"\\blooker\\b",
+				"\\bLookML\\b"
+			]
+		},
+		{
+			"name": "Visualization Libraries",
+			"category": "Visualization & BI",
+			"patterns": [
+				"\\bMatplotlib\\b",
+				"\\bSeaborn\\b",
+				"\\bPlotly\\b",
+				"\\bD3\\.js\\b",
+				"\\bggplot2\\b",
+				"\\bStreamlit\\b",
+				"\\bGradio\\b"
+			]
+		},
+		{
+			"name": "Excel",
+			"category": "Visualization & BI",
+			"patterns": [
+				"\\bEXCEL\\b",
+				"\\bExcel\\b",
+				"\\bexcel\\b",
+				"\\bVLOOKUP\\b",
+				"\\bXLOOKUP\\b",
+				"\\bPivot\\s+Tables\\b",
+				"\\bPower\\s+Query\\b"
+			]
+		},
+		{
+			"name": "Mathematical Modeling",
+			"category": "Mathematical Modeling",
+			"patterns": [
+				"\\bMATHEMATICAL\\s+MODELING\\b",
+				"\\bMathematical\\s+Modeling\\b",
+				"\\bmathematical\\s+modeling\\b",
+				"\\bOptimization\\s+Modeling\\b",
+				"\\bSimulation\\s+Modeling\\b"
+			]
+		},
+		{
+			"name": "Simulation",
+			"category": "Mathematical Modeling",
+			"patterns": [
+				"\\bSIMULATION\\b",
+				"\\bSimulation\\b",
+				"\\bsimulation\\b",
+				"\\bMonte\\s+Carlo\\b",
+				"\\bDiscrete\\s+Event\\s+Simulation\\b"
+			]
+		},
+		{
+			"name": "Generative AI",
+			"category": "Generative AI",
+			"patterns": [
+				"\\bGENERATIVE\\s+AI\\b",
+				"\\bGenerative\\s+AI\\b",
+				"\\bgenerative\\s+ai\\b",
+				"\\bLarge\\s+Language\\s+Models\\b",
+				"\\bLLMs\\b",
+				"\\bGPT\\b",
+				"\\bTransformers\\b"
+			]
+		},
+		{
+			"name": "LLM Operations",
+			"category": "AI & Advanced Modeling",
+			"patterns": [
+				"\\bLLMOPS\\b",
+				"\\bLLMOps\\b",
+				"\\bllmops\\b",
+				"\\bPrompt\\s+Engineering\\b",
+				"\\bFine-tuning\\b",
+				"\\bRAG\\b",
+				"\\bRetrieval\\s+Augmented\\s+Generation\\b"
+			]
+		},
+		{
+			"name": "AI Frameworks",
+			"category": "AI & Advanced Modeling",
+			"patterns": [
+				"\\bLangChain\\b",
+				"\\bLlamaIndex\\b",
+				"\\bHugging\\s+Face\\b",
+				"\\bOpenAI\\b",
+				"\\bAnthropic\\b",
+				"\\bClaude\\b",
+				"\\bGemini\\b"
+			]
+		},
+		{
+			"name": "MLOps",
+			"category": "AI & Advanced Modeling",
+			"patterns": [
+				"\\bMLOPS\\b",
+				"\\bMLOps\\b",
+				"\\bmlops\\b",
+				"\\bModel\\s+Deployment\\b",
+				"\\bModel\\s+Monitoring\\b",
+				"\\bMLflow\\b",
+				"\\bKubeflow\\b"
+			]
+		},
+		{
+			"name": "Scientific Computing",
+			"category": "Research & Scientific Computing",
+			"patterns": [
+				"\\bSCIENTIFIC\\s+COMPUTING\\b",
+				"\\bScientific\\s+Computing\\b",
+				"\\bscientific\\s+computing\\b",
+				"\\bNumPy\\b",
+				"\\bSciPy\\b",
+				"\\bPandas\\b",
+				"\\bJupyter\\b"
+			]
+		},
+		{
+			"name": "Research Methods",
+			"category": "Research & Scientific Computing",
+			"patterns": [
+				"\\bRESEARCH\\s+METHODS\\b",
+				"\\bResearch\\s+Methods\\b",
+				"\\bresearch\\s+methods\\b",
+				"\\bExperimental\\s+Design\\b",
+				"\\bCausal\\s+Inference\\b",
+				"\\bUser\\s+Research\\b"
+			]
+		},
+		{
+			"name": "Technical Writing",
+			"category": "Research & Scientific Computing",
+			"patterns": [
+				"\\bTECHNICAL\\s+WRITING\\b",
+				"\\bTechnical\\s+Writing\\b",
+				"\\btechnical\\s+writing\\b",
+				"\\bDocumentation\\b",
+				"\\bPublic\\s+Speaking\\b"
+			]
+		},
+		{
+			"name": "Product Management",
+			"category": "Product & Business Knowledge",
+			"patterns": [
+				"\\bPRODUCT\\s+MANAGEMENT\\b",
+				"\\bProduct\\s+Management\\b",
+				"\\bproduct\\s+management\\b",
+				"\\bProduct\\s+Roadmapping\\b",
+				"\\bUser\\s+Stories\\b",
+				"\\bRequirements\\s+Gathering\\b"
+			]
+		},
+		{
+			"name": "Business Intelligence",
+			"category": "Product & Business Knowledge",
+			"patterns": [
+				"\\bBUSINESS\\s+INTELLIGENCE\\b",
+				"\\bBusiness\\s+Intelligence\\b",
+				"\\bbusiness\\s+intelligence\\b",
+				"\\bBusiness\\s+Analytics\\b",
+				"\\bKPI\\s+Tracking\\b",
+				"\\bMetrics\\s+Analysis\\b"
+			]
+		},
+		{
+			"name": "Domain Knowledge",
+			"category": "Product & Business Knowledge",
+			"patterns": [
+				"\\bDOMAIN\\s+KNOWLEDGE\\b",
+				"\\bDomain\\s+Knowledge\\b",
+				"\\bdomain\\s+knowledge\\b",
+				"\\bBusiness\\s+Acumen\\b",
+				"\\bIndustry\\s+Knowledge\\b",
+				"\\bMarket\\s+Research\\b"
+			]
+		},
+		{
+			"name": "Leadership",
+			"category": "Soft & Managerial Skills",
+			"patterns": [
+				"\\bLEADERSHIP\\b",
+				"\\bLeadership\\b",
+				"\\bleadership\\b",
+				"\\bTeam\\s+Management\\b",
+				"\\bMentoring\\b",
+				"\\bCoaching\\b"
+			]
+		},
+		{
+			"name": "Communication",
+			"category": "Soft & Managerial Skills",
+			"patterns": [
+				"\\bCOMMUNICATION\\b",
+				"\\bCommunication\\b",
+				"\\bcommunication\\b",
+				"\\bPresentation\\s+Skills\\b",
+				"\\bStakeholder\\s+Management\\b",
+				"\\bActive\\s+Listening\\b"
+			]
+		},
+		{
+			"name": "Problem Solving",
+			"category": "Soft & Managerial Skills",
+			"patterns": [
+				"\\bPROBLEM\\s+SOLVING\\b",
+				"\\bProblem\\s+Solving\\b",
+				"\\bproblem\\s+solving\\b",
+				"\\bCritical\\s+Thinking\\b",
+				"\\bAnalytical\\s+Thinking\\b",
+				"\\bDecision\\s+Making\\b"
+			]
+		},
+		{
+			"name": "Project Management",
+			"category": "Soft & Managerial Skills",
+			"patterns": [
+				"\\bPROJECT\\s+MANAGEMENT\\b",
+				"\\bProject\\s+Management\\b",
+				"\\bproject\\s+management\\b",
+				"\\bAgile\\b",
+				"\\bScrum\\b",
+				"\\bPRINCE2\\b",
+				"\\bPMP\\b"
+			]
+		},
+		{
+			"name": "Cybersecurity",
+			"category": "Security & Compliance",
+			"patterns": [
+				"\\bCYBERSECURITY\\b",
+				"\\bCybersecurity\\b",
+				"\\bcybersecurity\\b",
+				"\\bInformation\\s+Security\\b",
+				"\\bNetwork\\s+Security\\b",
+				"\\bCloud\\s+Security\\b"
+			]
+		},
+		{
+			"name": "Security Testing",
+			"category": "Security & Compliance",
+			"patterns": [
+				"\\bSECURITY\\s+TESTING\\b",
+				"\\bSecurity\\s+Testing\\b",
+				"\\bsecurity\\s+testing\\b",
+				"\\bPenetration\\s+Testing\\b",
+				"\\bVulnerability\\s+Assessment\\b",
+				"\\bSAST\\b",
+				"\\bDAST\\b"
+			]
+		},
+		{
+			"name": "Compliance",
+			"category": "Security & Compliance",
+			"patterns": [
+				"\\bCOMPLIANCE\\b",
+				"\\bCompliance\\b",
+				"\\bcompliance\\b",
+				"\\bGDPR\\b",
+				"\\bHIPAA\\b",
+				"\\bSOC\\s+2\\b",
+				"\\bCompliance\\s+Management\\b"
+			]
+		}
+	]
 }
