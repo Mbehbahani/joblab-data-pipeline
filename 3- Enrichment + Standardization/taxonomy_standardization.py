@@ -33,6 +33,7 @@ INPUT_DB_PATH = Path(__file__).parent.parent / "2- Preprocessed" / "jobs_process
 OUTPUT_DB_PATH = Path(__file__).parent / "jobs_enriched.db"
 REPORT_PATH = Path(__file__).parent / "Report3.txt"
 SKILLS_REFERENCE_PATH = Path(__file__).parent.parent / "src" / "config" / "skills_reference.json"
+TOOLS_REFERENCE_PATH = Path(__file__).parent.parent / "src" / "config" / "tools_reference.json"
 
 NA_VALUE = "NA"
 
@@ -727,6 +728,153 @@ def extract_skills(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # ============================================================================
+# TASK 6b: tools (Extract optimization tools into separate column)
+# ============================================================================
+
+def load_tool_extractor():
+    """
+    Load the tool extractor from the tool_extractor module.
+    Falls back to a simple implementation if the module is not available.
+    """
+    try:
+        from src.analysis.skill_extraction.tool_extractor import ToolExtractor
+        extractor = ToolExtractor(str(TOOLS_REFERENCE_PATH))
+        print(f"  \u2713 Loaded ToolExtractor with {extractor.get_tools_count()} tools")
+        return extractor
+    except ImportError as e:
+        print(f"  \u26a0 Could not import ToolExtractor: {e}")
+        print("  \u2192 Using fallback implementation")
+        return None
+
+
+def extract_tools_from_description(description: str, extractor=None) -> str:
+    """
+    Extract optimization tools from job description.
+    
+    Args:
+        description: Job description text (cleaned)
+        extractor: ToolExtractor instance or None for fallback
+        
+    Returns:
+        Comma-separated string of extracted tool names
+    """
+    if pd.isna(description) or not description:
+        return ""
+    
+    if extractor:
+        return extractor.extract_tools_string(str(description))
+    
+    # Fallback: simple keyword matching
+    import json
+    if not TOOLS_REFERENCE_PATH.exists():
+        return ""
+    
+    try:
+        with open(TOOLS_REFERENCE_PATH, 'r', encoding='utf-8') as f:
+            tools_data = json.load(f)
+        
+        tools = tools_data.get('tools', [])
+        description_text = str(description)
+        found_tools = set()
+        
+        for tool in tools:
+            name = tool.get('name', '')
+            patterns = tool.get('patterns', [])
+            
+            for pattern in patterns:
+                try:
+                    if re.search(pattern, description_text, re.IGNORECASE):
+                        found_tools.add(name)
+                        break
+                except re.error:
+                    if name.lower() in description_text.lower():
+                        found_tools.add(name)
+                        break
+        
+        return ', '.join(sorted(found_tools))
+    except Exception as e:
+        print(f"    Warning: Tool extraction failed: {e}")
+        return ""
+
+
+def extract_tools(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Extract optimization tools from job descriptions into a new 'tools' column.
+    
+    This keeps optimization solvers/libraries separate from general skills.
+    """
+    print("\n" + "="*80)
+    print("TASK 6b: tools (Optimization Tool Extraction)")
+    print("="*80)
+    
+    print(f"\n  Tools Reference: {TOOLS_REFERENCE_PATH}")
+    
+    # Load tool extractor
+    extractor = load_tool_extractor()
+    
+    # Use either cleaned description or raw description
+    desc_column = 'job_description_clean' if 'job_description_clean' in df.columns else 'job_description'
+    print(f"  Using description column: {desc_column}")
+    print(f"  Output: Creating 'tools' column")
+    
+    # Extract tools for each job
+    print(f"  Processing {len(df)} job descriptions...")
+    
+    df['tools'] = df[desc_column].apply(
+        lambda desc: extract_tools_from_description(desc, extractor)
+    )
+    
+    # Calculate statistics
+    jobs_with_tools = (df['tools'].apply(lambda x: pd.notna(x) and str(x).strip() != '')).sum()
+    jobs_with_tools_pct = jobs_with_tools / len(df) * 100
+    
+    # Count unique tools across all jobs
+    all_tools_flat = []
+    for tool_str in df['tools'].dropna():
+        if tool_str:
+            all_tools_flat.extend([t.strip() for t in str(tool_str).split(',') if t.strip()])
+    
+    tool_counts = Counter(all_tools_flat)
+    unique_tools = len(tool_counts)
+    total_tool_mentions = len(all_tools_flat)
+    avg_tools_per_job = total_tool_mentions / len(df) if len(df) > 0 else 0
+    
+    print(f"\n  Results:")
+    print(f"    Jobs with tools extracted:  {jobs_with_tools} ({jobs_with_tools_pct:.1f}%)")
+    print(f"    Unique tools found:         {unique_tools}")
+    print(f"    Total tool mentions:        {total_tool_mentions}")
+    print(f"    Avg tools per job:          {avg_tools_per_job:.1f}")
+    
+    # Show tool distribution
+    print(f"\n  Tool Distribution (all {unique_tools} tools):")
+    for tool, count in tool_counts.most_common():
+        pct = count / len(df) * 100
+        print(f"    {tool:<30}: {count:>5} ({pct:>5.1f}%)")
+    
+    # Also remove tool entries from the 'skills' column to avoid duplication
+    if extractor:
+        tool_names = set(extractor.get_all_tool_names())
+    else:
+        tool_names = set()
+        try:
+            import json
+            with open(TOOLS_REFERENCE_PATH, 'r', encoding='utf-8') as f:
+                tools_data = json.load(f)
+            tool_names = {t['name'] for t in tools_data.get('tools', [])}
+        except Exception:
+            pass
+    
+    if tool_names and 'skills' in df.columns:
+        # The skills column stores categories, not individual tool names,
+        # so tool categories (Pyomo, OR-Tools, etc.) that were previously
+        # used as category names are already removed from skills_reference.json.
+        # No additional cleanup needed since we updated skills_reference.json.
+        print(f"\n  \u2713 Skills column already uses updated skills_reference.json (tools excluded)")
+    
+    return df
+
+
+# ============================================================================
 # TASK 7: job_relevance_score - Score job relevance based on keywords
 # ============================================================================
 
@@ -1126,6 +1274,7 @@ def run_enrichment_pipeline():
     df = standardize_job_functions(df)
     df = standardize_company_industries(df)
     df = extract_skills(df)  # Task 6: Comprehensive skill extraction
+    df = extract_tools(df)   # Task 6b: Optimization tool extraction
     
     # Save to new database, job_relevance_score
     print("\n" + "="*80)
@@ -1152,6 +1301,7 @@ Summary:
   • keyword_frequency    - Count of keyword occurrences in title/description
   • job_relevance_score  - Job relevance score (1-10 scale)
   • skills               - Category-level skill extraction (30 categories)
+  • tools                - Optimization tool extraction (separate column)
   • Jobs processed: {len(df)}
   • Input:  {INPUT_DB_PATH}
   • Output: {OUTPUT_DB_PATH}
@@ -1164,6 +1314,7 @@ New Columns Added:
   • job_function_std     - Standardized job function (14 categories)
   • company_industry_std - Standardized industry (15 categories)
   • skills (updated)     - Category-level extraction (30 categories from skills_reference.json)
+  • tools (new)          - Optimization tools (from tools_reference.json)
   • keyword_frequency    - Keyword occurrences in title/description
   • job_relevance_score  - Relevance score (1-10 based on tiers + frequency)
 """)

@@ -1,15 +1,9 @@
 {
-  "total_skills": 127,
+  "total_skills": 121,
   "categories": [
     "Python",
     "R",
     "Natural Language Processing",
-    "Pyomo",
-    "OR-Tools",
-    "GAMS",
-    "AMPL",
-    "CPLEX",
-    "Gurobi",
     "Generative AI",
     "Programming Languages",
     "Data Science & Analytics", 
@@ -203,36 +197,6 @@
         "\\bREINFORCEMENT\\s+LEARNING\\b", "\\bReinforcement\\s+Learning\\b", "\\breinforcement\\s+learning\\b",
         "\\bRL\\b", "\\bRLHF\\b"
       ]
-    },
-    {
-      "name": "Pyomo",
-      "category": "Pyomo",
-      "patterns": ["\\bPYOMO\\b", "\\bPyomo\\b", "\\bpyomo\\b"]
-    },
-    {
-      "name": "OR-Tools",
-      "category": "OR-Tools",
-      "patterns": ["\\bOR-TOOLS\\b", "\\bOR-Tools\\b", "\\bor-tools\\b", "\\bGoogle\\s+OR-Tools\\b"]
-    },
-    {
-      "name": "GAMS",
-      "category": "GAMS",
-      "patterns": ["\\bGAMS\\b", "\\bGAMS\\b", "\\bgams\\b"]
-    },
-    {
-      "name": "AMPL",
-      "category": "AMPL",
-      "patterns": ["\\bAMPL\\b", "\\bAMPL\\b", "\\bampl\\b"]
-    },
-    {
-      "name": "CPLEX",
-      "category": "CPLEX",
-      "patterns": ["\\bCPLEX\\b", "\\bCPLEX\\b", "\\bcplex\\b", "\\bIBM\\s+CPLEX\\b"]
-    },
-    {
-      "name": "Gurobi",
-      "category": "Gurobi",
-      "patterns": ["\\bGUROBI\\b", "\\bGurobi\\b", "\\bgurobi\\b"]
     },
     {
       "name": "Mathematical Programming",

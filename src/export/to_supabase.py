@@ -355,6 +355,10 @@ def read_jobs_from_db(db_path: Path) -> List[Dict[str, Any]]:
     if "job_relevance_score" in columns:
         select_columns.append("job_relevance_score")
     
+    # Add tools column if exists (new column added for optimization tools)
+    if "tools" in columns:
+        select_columns.append("tools")
+    
     query = f"SELECT {', '.join(select_columns)} FROM jobs"
     logger.info(f"Query: {query[:80]}...")
     
@@ -373,6 +377,7 @@ def read_jobs_from_db(db_path: Path) -> List[Dict[str, Any]]:
             "url": row["url"] or "",
             "actual_role": row["actual_role"] or "Unknown",
             "skills": row["skills"] if row["skills"] else None,
+            "tools": row["tools"] if "tools" in row.keys() and row["tools"] else None,
             "search_term": row["search_term"] if row["search_term"] else None,
             "job_type_filled": row["job_type_filled"] or "Not Specified",
             "job_level_std": row["job_level_std"] or "Not Specified",
@@ -611,6 +616,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     url TEXT NOT NULL DEFAULT '',
     actual_role TEXT NOT NULL DEFAULT 'Unknown',
     skills TEXT,
+    tools TEXT,
     search_term TEXT,
     job_type_filled TEXT NOT NULL DEFAULT 'Not Specified',
     job_level_std TEXT NOT NULL DEFAULT 'Not Specified',

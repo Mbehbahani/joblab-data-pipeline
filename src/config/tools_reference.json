@@ -1,0 +1,129 @@
+{
+  "total_tools": 21,
+  "description": "Optimization solvers, modeling languages, specialized OR tools, and related workflow/MLOps tools. These are extracted separately from general skills.",
+  "categories": [
+    "Optimization Solvers",
+    "Modeling Languages",
+    "Optimization Libraries",
+    "MLOps & Workflow Tools"
+  ],
+  "tools": [
+    {
+      "name": "Gurobi",
+      "category": "Optimization Solvers",
+      "patterns": ["\\bGUROBI\\b", "\\bGurobi\\b", "\\bgurobi\\b"]
+    },
+    {
+      "name": "CPLEX",
+      "category": "Optimization Solvers",
+      "patterns": ["\\bCPLEX\\b", "\\bcplex\\b", "\\bIBM\\s+CPLEX\\b", "\\bIBM\\s+ILOG\\s+CPLEX\\b"]
+    },
+    {
+      "name": "MOSEK",
+      "category": "Optimization Solvers",
+      "patterns": ["\\bMOSEK\\b", "\\bMosek\\b", "\\bmosek\\b"]
+    },
+    {
+      "name": "Xpress",
+      "category": "Optimization Solvers",
+      "patterns": ["\\bXPRESS\\b", "\\bXpress\\b", "\\bxpress\\b", "\\bFICO\\s+Xpress\\b"]
+    },
+    {
+      "name": "CBC",
+      "category": "Optimization Solvers",
+      "patterns": ["\\bCBC\\b", "\\bCOIN-OR\\s+CBC\\b"]
+    },
+    {
+      "name": "GLPK",
+      "category": "Optimization Solvers",
+      "patterns": ["\\bGLPK\\b", "\\bglpk\\b"]
+    },
+    {
+      "name": "SCIP",
+      "category": "Optimization Solvers",
+      "patterns": ["\\bSCIP\\b", "\\bscip\\b"]
+    },
+    {
+      "name": "GAMS",
+      "category": "Modeling Languages",
+      "patterns": ["\\bGAMS\\b", "\\bgams\\b"]
+    },
+    {
+      "name": "AMPL",
+      "category": "Modeling Languages",
+      "patterns": ["\\bAMPL\\b", "\\bampl\\b"]
+    },
+    {
+      "name": "Pyomo",
+      "category": "Optimization Libraries",
+      "patterns": ["\\bPYOMO\\b", "\\bPyomo\\b", "\\bpyomo\\b"]
+    },
+    {
+      "name": "OR-Tools",
+      "category": "Optimization Libraries",
+      "patterns": ["\\bOR-TOOLS\\b", "\\bOR-Tools\\b", "\\bor-tools\\b", "\\bGoogle\\s+OR-Tools\\b", "\\bORTools\\b", "\\bortools\\b"]
+    },
+    {
+      "name": "PuLP",
+      "category": "Optimization Libraries",
+      "patterns": ["\\bPuLP\\b", "\\bPULP\\b", "\\bpulp\\b"]
+    },
+    {
+      "name": "CVXPY",
+      "category": "Optimization Libraries",
+      "patterns": ["\\bCVXPY\\b", "\\bcvxpy\\b", "\\bCvxpy\\b"]
+    },
+    {
+      "name": "Gekko",
+      "category": "Optimization Libraries",
+      "patterns": ["\\bGEKKO\\b", "\\bGekko\\b", "\\bgekko\\b"]
+    },
+    {
+      "name": "SciPy Optimize",
+      "category": "Optimization Libraries",
+      "patterns": ["\\bscipy\\.optimize\\b", "\\bSciPy\\s+Optimize\\b", "\\bscipy\\.optim\\b"]
+    },
+    {
+      "name": "OptaPlanner",
+      "category": "Optimization Libraries",
+      "patterns": ["\\bOPTAPLANNER\\b", "\\bOptaPlanner\\b", "\\boptaplanner\\b"]
+    },
+    {
+      "name": "Concorde",
+      "category": "Optimization Solvers",
+      "patterns": ["\\bCONCORDE\\b", "\\bConcorde\\b", "\\bconcorde\\b"]
+    },
+    {
+      "name": "LocalSolver",
+      "category": "Optimization Solvers",
+      "patterns": ["\\bLOCALSOLVER\\b", "\\bLocalSolver\\b", "\\blocalsolver\\b"]
+    },
+    {
+      "name": "Metaheuristics",
+      "category": "Optimization Libraries",
+      "patterns": [
+        "\\bMETAHEURISTIC\\b", "\\bMetaheuristic\\b", "\\bmetaheuristic\\b",
+        "\\bMETAHEURISTICS\\b", "\\bMetaheuristics\\b", "\\bmetaheuristics\\b",
+        "\\bHEURISTIC\\b", "\\bHeuristic\\b", "\\bheuristic\\b",
+        "\\bGenetic\\s+Algorithm\\b", "\\bGenetic\\s+Algorithms\\b",
+        "\\bSimulated\\s+Annealing\\b",
+        "\\bTabu\\s+Search\\b",
+        "\\bParticle\\s+Swarm\\b",
+        "\\bAnt\\s+Colony\\b"
+      ]
+    },
+    {
+      "name": "MLflow",
+      "category": "MLOps & Workflow Tools",
+      "patterns": ["\\bMLFLOW\\b", "\\bMLflow\\b", "\\bmlflow\\b"]
+    },
+    {
+      "name": "Apache Airflow",
+      "category": "MLOps & Workflow Tools",
+      "patterns": [
+        "\\bAPACHE\\s+AIRFLOW\\b", "\\bApache\\s+Airflow\\b",
+        "\\bAIRFLOW\\b", "\\bAirflow\\b", "\\bairflow\\b"
+      ]
+    }
+  ]
+}
