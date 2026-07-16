@@ -1,0 +1,56 @@
+flowchart TD
+    DEV([💻 Developer / CI])
+    SETUP[/⚙️ aws-setup-supabase.ps1\nProvision AWS infrastructure/]
+    DEPLOY[/🐳 deploy-supabase.ps1\nBuild and push container/]
+    MANUAL[/🧪 run-manual.ps1\nTrigger one-off ECS task/]
+
+    S3[(🪣 S3 Bucket\nSnapshots / artifacts)]
+    ECR[(📦 ECR Repository\nContainer images)]
+    LOGS[(📜 CloudWatch Logs)]
+    SSM[(🔐 SSM Parameter Store\nSupabase secrets)]
+
+    IAM{{🛡️ IAM Roles\nTaskExecution / Task / Scheduler}}
+    ECSC{{☁️ ECS Cluster\nFargate}}
+    TD[/📋 ECS Task Definition\npython -u src/orchestrate/run_weekly.py/]
+    SCH([⏰ EventBridge Scheduler\nDaily 2 AM Europe/Berlin])
+    RUN([🚀 ECS Fargate Task])
+    SUPA[(🟢 Supabase)]
+    APP[[🐍 Weekly Pipeline\nsrc/orchestrate/run_weekly.py]]
+
+    DEV --> SETUP
+    DEV --> DEPLOY
+    DEV --> MANUAL
+
+    SETUP --> S3
+    SETUP --> ECR
+    SETUP --> LOGS
+    SETUP --> SSM
+    SETUP --> IAM
+    SETUP --> ECSC
+    SETUP --> TD
+    SETUP --> SCH
+
+    DEPLOY --> ECR
+
+    SCH --> RUN
+    MANUAL --> RUN
+    ECSC --> RUN
+    TD --> RUN
+    ECR --> RUN
+    SSM --> RUN
+    IAM --> RUN
+
+    RUN --> APP
+    APP --> SUPA
+    APP --> S3
+    APP --> LOGS
+
+    classDef actor fill:#1f2937,stroke:#60a5fa,color:#f9fafb,stroke-width:2px;
+    classDef script fill:#111827,stroke:#f59e0b,color:#f9fafb,stroke-width:2px;
+    classDef aws fill:#0b1220,stroke:#8b5cf6,color:#f9fafb,stroke-width:2px;
+    classDef runtime fill:#052e2b,stroke:#34d399,color:#ecfeff,stroke-width:2px;
+
+    class DEV actor;
+    class SETUP,DEPLOY,MANUAL,TD script;
+    class S3,ECR,LOGS,SSM,IAM,ECSC,SCH aws;
+    class RUN,SUPA,APP runtime;
