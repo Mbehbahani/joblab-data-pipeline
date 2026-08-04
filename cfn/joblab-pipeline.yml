@@ -1,0 +1,252 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: JobLab pipeline infrastructure (ECS Fargate + Scheduler) mirroring scripts/aws-setup.sh
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: joblab
+  AwsRegion:
+    Type: String
+    Default: us-east-1
+  S3BucketName:
+    Type: String
+    Default: joblab-pipeline-data-moha-20260126
+  EcrRepoName:
+    Type: String
+    Default: joblab-pipeline
+  EcsClusterName:
+    Type: String
+    Default: joblab-cluster
+  EcsTaskFamily:
+    Type: String
+    Default: joblab-pipeline-task
+  LogGroupName:
+    Type: String
+    Default: /ecs/joblab-pipeline
+  ScheduleName:
+    Type: String
+    Default: daily-joblab-2am
+  TaskCpu:
+    Type: String
+    Default: '1024'
+  TaskMemory:
+    Type: String
+    Default: '2048'
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: Default VPC ID (e.g., vpc-xxxx)
+  SubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: Subnets in the default VPC (e.g., subnet-a,subnet-b)
+  ConvexDeploymentUrl:
+    Type: String
+    NoEcho: true
+    Default: https://your-deployment.convex.cloud
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref S3BucketName
+      VersioningConfiguration:
+        Status: Enabled
+
+  EcrRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Ref EcrRepoName
+      ImageScanningConfiguration:
+        ScanOnPush: true
+      EncryptionConfiguration:
+        EncryptionType: AES256
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Ref LogGroupName
+      RetentionInDays: 30
+
+  TaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ecsTaskExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      Policies:
+        - PolicyName: !Sub '${ProjectName}-ssm-access'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameters
+                  - secretsmanager:GetSecretValue
+                Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${ProjectName}/*'
+
+  TaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ecsTaskRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub '${ProjectName}-s3-access'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:ListBucket
+                Resource:
+                  - !Sub 'arn:aws:s3:::${S3BucketName}'
+                  - !Sub 'arn:aws:s3:::${S3BucketName}/*'
+
+  EcsCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Ref EcsClusterName
+      CapacityProviders:
+        - FARGATE
+        - FARGATE_SPOT
+      DefaultCapacityProviderStrategy:
+        - CapacityProvider: FARGATE_SPOT
+          Weight: 1
+
+  ConvexParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub '/${ProjectName}/CONVEX_DEPLOYMENT_URL'
+      Description: Convex deployment URL
+      Type: SecureString
+      Value: !Ref ConvexDeploymentUrl
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub '${ProjectName}-ecs-sg'
+      GroupDescription: !Sub 'Security group for ${ProjectName} ECS tasks'
+      VpcId: !Ref VpcId
+
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: !Ref EcsTaskFamily
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      Cpu: !Ref TaskCpu
+      Memory: !Ref TaskMemory
+      ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt TaskRole.Arn
+      ContainerDefinitions:
+        - Name: joblab-pipeline
+          Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${EcrRepoName}:latest'
+          Essential: true
+          Command:
+            - sh
+            - -c
+            - exec python -u src/orchestrate/run_weekly.py 2>&1
+          Environment:
+            - Name: DRY_RUN
+              Value: 'false'
+            - Name: S3_BUCKET
+              Value: !Ref S3BucketName
+            - Name: S3_PREFIX
+              Value: joblab
+            - Name: AWS_REGION
+              Value: !Ref AwsRegion
+            - Name: PYTHONUNBUFFERED
+              Value: '1'
+          Secrets:
+            - Name: CONVEX_DEPLOYMENT_URL
+              ValueFrom: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${ProjectName}/CONVEX_DEPLOYMENT_URL'
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref LogGroupName
+              awslogs-region: !Ref AwsRegion
+              awslogs-stream-prefix: ecs
+
+  SchedulerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectName}-scheduler-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: scheduler.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub '${ProjectName}-scheduler-policy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ecs:RunTask
+                Resource:
+                  - !Ref TaskDefinition
+                  - !GetAtt EcsCluster.Arn
+              - Effect: Allow
+                Action:
+                  - iam:PassRole
+                Resource:
+                  - !GetAtt TaskExecutionRole.Arn
+                  - !GetAtt TaskRole.Arn
+
+  Schedule:
+    Type: AWS::Scheduler::Schedule
+    Properties:
+      Name: !Ref ScheduleName
+      ScheduleExpression: 'cron(0 2 * * ? *)'
+      ScheduleExpressionTimezone: UTC
+      FlexibleTimeWindow:
+        Mode: OFF
+      Target:
+        RoleArn: !GetAtt SchedulerRole.Arn
+        Arn: !GetAtt EcsCluster.Arn
+        EcsParameters:
+          TaskDefinitionArn: !Ref TaskDefinition
+          TaskCount: 1
+          LaunchType: FARGATE
+          NetworkConfiguration:
+            AwsvpcConfiguration:
+              Subnets: !Ref SubnetIds
+              SecurityGroups:
+                - !Ref SecurityGroup
+              AssignPublicIp: ENABLED
+        RetryPolicy:
+          MaximumEventAgeInSeconds: 3600
+          MaximumRetryAttempts: 2
+
+Outputs:
+  ClusterName:
+    Value: !Ref EcsClusterName
+  ClusterArn:
+    Value: !GetAtt EcsCluster.Arn
+  TaskDefinitionArn:
+    Value: !Ref TaskDefinition
+  LogGroupName:
+    Value: !Ref LogGroupName
+  ScheduleName:
+    Value: !Ref ScheduleName
+  S3BucketName:
+    Value: !Ref S3BucketName
+  EcrRepositoryUri:
+    Value: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${EcrRepoName}'

@@ -43,8 +43,6 @@ tmp/
 temp/
 /tmp/
 zDocs/
-cfn/
-terraform/
 
 # AWS credentials (never commit!)
 *.pem
