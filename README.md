@@ -1,4 +1,10 @@
-# JobLab Data Pipeline
+# Job Market Pipeline [job.oploy.eu](https://job.oploy.eu)
+
+<p align="center">
+  <a href="https://job.oploy.eu">
+    <img src="./Readme/job-market-pipeline.jpg" alt="Job Market Pipeline workflow illustration" width="58%" />
+  </a>
+</p>
 
 Python **data pipeline** for scraping, filtering, normalizing, deduplicating, and exporting job-market data, deployed as a **daily scheduled AWS Fargate task** provisioned with **Terraform**.
 
