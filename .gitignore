@@ -59,3 +59,6 @@ PIPELINE_SUMMARY.md
 RUNBOOK.md
 3- Enrichment + Standardization/prompt.txt
 task-definition.json
+archives/supabase_cleanup/20260911T111954Z/old_job_chunks_older_than_30d.jsonl.gz
+archives/supabase_cleanup/20260911T111954Z/orphan_job_chunks.jsonl.gz
+archives/supabase_cleanup/20260911T111954Z/orphan_job_details.jsonl.gz

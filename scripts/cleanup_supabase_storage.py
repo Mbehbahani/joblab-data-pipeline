@@ -17,6 +17,10 @@ Safety model:
 - URL-duplicate cleanup is intentionally NOT performed here because deleting
   `jobs` by URL can orphan `job_details` / `job_chunks` unless merged carefully.
 
+Afterwards run `scripts/vacuum_supabase.py` - deleting rows does not shrink the
+files that Supabase's Database Size quota measures; VACUUM FULL does.
+Full procedure: zDocs/RUNBOOK.md -> "Supabase Storage Cleanup".
+
 Examples:
     # Read-only report only
     python scripts/cleanup_supabase_storage.py --days 30
