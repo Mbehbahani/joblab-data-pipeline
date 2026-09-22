@@ -14,4 +14,5 @@ langdetect>=1.0.9
 boto3>=1.34.0
 botocore>=1.34.0
 python-dotenv>=1.0.0
+psycopg2-binary>=2.9.0  # scripts/cleanup_supabase_storage.py, scripts/vacuum_supabase.py
 ```
