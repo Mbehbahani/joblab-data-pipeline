@@ -48,6 +48,7 @@ from typing import Optional, Dict, Any
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from export.to_supabase import push_jobs_to_supabase, PushResult
+from storage.local_storage import LocalSnapshotManager
 
 # Configure logging
 logging.basicConfig(
@@ -91,6 +92,7 @@ def get_env_config() -> Dict[str, Any]:
         "clear_supabase": os.environ.get("CLEAR_SUPABASE", "false").lower() == "true",
         "supabase_url": os.environ.get("SUPABASE_URL"),
         "supabase_service_role_key": os.environ.get("SUPABASE_SERVICE_ROLE_KEY"),
+        "joblab_data_dir": os.environ.get("JOBLAB_DATA_DIR", "/opt/joblab/data"),
         "scrape_countries": os.environ.get("SCRAPE_COUNTRIES"),
         "scrape_max_jobs": int(os.environ.get("SCRAPE_MAX_JOBS", "50")),
         "days_back": int(os.environ.get("DAYS_BACK", "7")),
@@ -111,7 +113,7 @@ class PipelineOrchestrator:
             "jobs_processed": 0,
             "jobs_enriched": 0,
             "duplicates_detected": 0,
-            "s3_snapshot_path": None,
+            "snapshot_path": None,
             "supabase_upserted": 0,
             "supabase_skipped": 0,
             "duplicates_removed": 0,
@@ -289,8 +291,13 @@ class PipelineOrchestrator:
             os.environ["JOB_DB_PATH"] = str(final_db)
             
             if local_mode:
-                logger.info("Local mode: Skipping S3 upload")
-                self.stats["s3_snapshot_path"] = str(final_db)
+                manager = LocalSnapshotManager(self.config["joblab_data_dir"])
+                if not manager.save_snapshot(source_db, self.run_id, self.stats["jobs_enriched"]):
+                    self.stats["errors"].append("Local snapshot save failed")
+                    return False
+                removed = manager.prune_old_snapshots(keep_last=30)
+                logger.info("Local snapshot saved; pruned %s old snapshots", removed)
+                self.stats["snapshot_path"] = str(manager.get_latest_snapshot())
                 return True
             
             # Upload to S3
@@ -332,7 +339,7 @@ class PipelineOrchestrator:
             s3_client.upload_file(str(local_path), bucket, latest_key)
             logger.info("Latest snapshot updated successfully")
             
-            self.stats["s3_snapshot_path"] = f"s3://{bucket}/{versioned_key}"
+            self.stats["snapshot_path"] = f"s3://{bucket}/{versioned_key}"
             
             # Also upload a manifest file
             manifest = {
@@ -524,7 +531,7 @@ class PipelineOrchestrator:
         logger.info(f"Jobs Enriched:       {self.stats['jobs_enriched']}")
         logger.info(f"Duplicates:          {self.stats['duplicates_detected']}")
         logger.info("")
-        logger.info(f"S3 Snapshot:         {self.stats['s3_snapshot_path'] or 'Not uploaded'}")
+        logger.info(f"Snapshot:            {self.stats['snapshot_path'] or 'Not saved'}")
         logger.info(f"Supabase Upserted:   {self.stats['supabase_upserted']}")
         logger.info(f"Supabase Skipped:    {self.stats['supabase_skipped']}")
         logger.info(

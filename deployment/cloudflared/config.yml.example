@@ -1,0 +1,9 @@
+tunnel: <TUNNEL_UUID>
+credentials-file: /etc/cloudflared/<TUNNEL_UUID>.json
+
+ingress:
+  - hostname: jobs.yourdomain.com
+    service: http://127.0.0.1:3001
+  - hostname: api.yourdomain.com
+    service: http://127.0.0.1:3000
+  - service: http_status:404

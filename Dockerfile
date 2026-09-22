@@ -22,7 +22,7 @@ RUN python --version && sqlite3 --version
 WORKDIR /app
 
 # Create non-root user for security
-RUN groupadd -r joblab && useradd -r -g joblab -m joblab
+RUN groupadd --gid 10001 joblab && useradd --uid 10001 --gid joblab --create-home joblab
 
 # Copy requirements first for better caching
 COPY requirements.txt .

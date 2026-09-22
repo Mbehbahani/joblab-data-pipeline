@@ -1,0 +1,16 @@
+[Unit]
+Description=JobLab daily scraping and data pipeline
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/joblab
+ExecStartPre=/usr/bin/docker image inspect joblab-pipeline:latest
+ExecStart=/usr/bin/docker run --rm --network joblab --env-file /opt/joblab/scraper.env --volume /opt/joblab/data:/opt/joblab/data joblab-pipeline:latest python -u src/orchestrate/run_weekly.py --local
+TimeoutStartSec=infinity
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

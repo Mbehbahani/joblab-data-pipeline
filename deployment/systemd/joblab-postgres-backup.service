@@ -1,0 +1,13 @@
+[Unit]
+Description=Create and validate a JobLab PostgreSQL backup
+Requires=docker.service
+After=docker.service
+ConditionPathExists=/opt/joblab/backup.env
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/joblab/app
+EnvironmentFile=/opt/joblab/backup.env
+ExecStart=/opt/joblab/app/scripts/backup-local-postgres.sh
+StandardOutput=journal
+StandardError=journal

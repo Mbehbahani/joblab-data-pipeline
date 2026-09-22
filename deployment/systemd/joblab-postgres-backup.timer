@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the JobLab PostgreSQL backup daily
+
+[Timer]
+OnCalendar=*-*-* 04:00:00 UTC
+Persistent=true
+Unit=joblab-postgres-backup.service
+
+[Install]
+WantedBy=timers.target
