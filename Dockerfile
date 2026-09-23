@@ -6,7 +6,7 @@
 # No Node.js required - Supabase push is done via Python HTTP client.
 # =============================================================================
 
-FROM python:3.11-slim as production
+FROM python:3.14-slim as production
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
